@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>egghead — the branded article · reference (night shift)</title>
+  <link rel="icon" href="data:,">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400..1000&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ── egghead article tokens · NIGHT SHIFT ─────────────────────────
+       Same token names + same prose grid as article.html, inverted.
+       Paper objects (sticky notes, torn rules, index cards) keep daylight. */
+    :root {
+      --paper:#0D141F; --cream:#16222F; --shell:#101926; --page:#0A101A;
+      --line:#2E3F54; --line-strong:#36485F; --card-top:#1E2C3E; --card-bottom:#16222F; --curl:#0E1620;
+      --yolk:#F7C948; --ink:#EDE4D3; --ink-soft:#9AABC0; --rust:#D67B5F; --sky:#A8D4E2; --sage:#9DBE8D; --sage-ink:#9DBE8D;
+      --navy:#0A101A; --navy-top:#1B2838; --navy-bottom:#0D1722;
+      --shadow-card:0 17px 34px rgba(0,0,0,.45),0 1px 0 rgba(255,255,255,.06) inset;
+      color-scheme: dark;
+    }
+    *{box-sizing:border-box} html{scroll-behavior:smooth} html,body{overflow-x:hidden}
+    body{margin:0;color:var(--ink);background:linear-gradient(180deg,var(--shell),var(--page));font-family:"Nunito",system-ui,sans-serif;font-size:clamp(1.06rem,.25vw + 1rem,1.18rem);line-height:1.72;-webkit-font-smoothing:antialiased}
+    body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.38;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px);background-size:34px 34px;mask-image:linear-gradient(180deg,#000,transparent 80%)}
+    img{display:block;max-width:100%;height:auto} code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+    a{color:var(--rust);text-decoration-thickness:1.5px;text-underline-offset:2px}
+
+    /* ── the reading grid ─────────────────────────────────────────── */
+    .prose{
+      display:grid;
+      grid-template-columns:
+        [full-start] minmax(1.25rem,1fr)
+        [breakout-start] minmax(0,7rem)
+        [content-start] min(66ch,100% - 2.5rem) [content-end]
+        minmax(0,7rem) [breakout-end]
+        minmax(1.25rem,1fr) [full-end];
+      padding:clamp(2rem,5vw,4.5rem) 0 6rem;
+    }
+    .prose > *{grid-column:content}
+    .prose > .breakout{grid-column:breakout-start / breakout-end}
+    .prose > .full{grid-column:full-start / full-end}
+
+    .prose > * + *{margin-top:1.15em}
+    .prose > h2{margin-top:2.4em} .prose > h3{margin-top:1.9em}
+    .prose > .breakout, .prose > .full{margin-top:2.8em} .prose > * + .breakout{margin-top:2.8em}
+    .prose > .breakout + *, .prose > .full + *{margin-top:2.8em}
+    .prose > h2 + *, .prose > h3 + *{margin-top:.7em}
+
+    .eyebrow{display:inline-flex;color:var(--rust);font-size:.8rem;font-weight:1000;letter-spacing:.09em;text-transform:uppercase}
+    h1,h2,h3,p{margin:0}
+    h1{margin-top:.5rem;font-size:clamp(2.4rem,4vw + 1rem,3.7rem);font-weight:800;line-height:1.02;letter-spacing:-.015em;max-width:18ch}
+    h2{font-size:clamp(1.6rem,1.5vw + 1.1rem,2.3rem);font-weight:800;line-height:1.1;letter-spacing:-.01em}
+    h3{font-size:clamp(1.2rem,.6vw + 1.05rem,1.5rem);font-weight:750;line-height:1.2}
+    .lede{color:var(--ink-soft);font-size:clamp(1.2rem,.7vw + 1.05rem,1.5rem);line-height:1.5;max-width:46ch}
+    .prose ul,.prose ol{margin:1.15em 0 0;padding-left:1.3em} .prose li{margin:.4em 0;padding-left:.2em}
+    .prose li::marker{color:var(--rust);font-weight:900}
+    strong{font-weight:900}
+    :not(pre) > code{padding:.08em .38em;border-radius:5px;background:#0C1A28;border:1px solid var(--line);font-size:.86em;color:#F0B59C}
+
+    .byline{display:flex;align-items:center;gap:.65rem;color:var(--ink-soft);font-weight:760;font-size:.95rem}
+    .byline img{width:38px;height:38px;border-radius:999px;border:2px solid rgba(255,255,255,.15);box-shadow:0 3px 8px rgba(0,0,0,.5)}
+    .rule{height:1px;background:linear-gradient(90deg,transparent,var(--line-strong),transparent)}
+    .rule:has(+ figure){display:none}  /* a hero image is its own separator */
+
+    figure{margin:0;padding:.6rem;background:linear-gradient(180deg,var(--card-top),var(--shell));border:1px solid var(--line);border-radius:10px;box-shadow:0 18px 34px rgba(0,0,0,.5)}
+    figure img{width:100%;border-radius:6px;border:1px solid rgba(0,0,0,.4)}
+    figure figcaption{padding:.6rem .3rem .15rem;color:var(--ink-soft);font-size:.86rem;font-weight:760;text-align:center}
+    /* 16:9 hero banner */
+    .hero-fig{padding:.6rem}.hero-fig .frame{aspect-ratio:16/9;overflow:hidden;border-radius:6px;border:1px solid rgba(0,0,0,.4);background:var(--shell)}.hero-fig .frame img{width:100%;height:100%;object-fit:cover;border:0;border-radius:0}
+
+    .pull{font-size:clamp(1.5rem,1.4vw + 1.2rem,2.15rem);line-height:1.22;font-weight:900;color:var(--ink);text-align:center;letter-spacing:-.01em}
+    .pull span{color:var(--rust)}
+
+    /* field rule — a taped-up sticky note in Eggo's hand, daylight paper */
+    .field-rule{position:relative;width:fit-content;max-width:min(32rem,100%);margin-inline:auto;padding:1.25rem 1.6rem 1.1rem;background:linear-gradient(180deg,#FBEFA9,#F3DF7E);border-radius:2px;box-shadow:0 1px 2px rgba(0,0,0,.3),0 12px 22px -4px rgba(0,0,0,.5);color:#1E2A38;font-family:"Caveat",cursive;font-size:1.55rem;line-height:1.18;transform:rotate(-.7deg)}.field-rule:before{content:"";position:absolute;left:50%;top:-.8rem;width:6.5rem;height:1.2rem;transform:translateX(-50%) rotate(-1.5deg);background:rgba(232,217,168,.6);box-shadow:0 2px 6px rgba(0,0,0,.3)}.field-rule strong{color:#A05040;font-weight:700}
+
+    /* sticky note — daylight paper */
+    .sticky{position:relative;width:min(300px,100%);margin-left:auto;padding:1.25rem 1.1rem 1rem;background:linear-gradient(180deg,#FBEFA9,#F3DF7E);border-radius:2px;box-shadow:0 1px 2px rgba(0,0,0,.3),0 10px 20px -4px rgba(0,0,0,.5);font-family:"Caveat",cursive;font-size:1.6rem;line-height:1.05;color:#1E2A38;transform:rotate(1.5deg)}.sticky:before{content:"";position:absolute;left:50%;top:-.85rem;width:7rem;height:1.2rem;transform:translateX(-50%) rotate(-1deg);background:rgba(232,217,168,.55);box-shadow:0 2px 6px rgba(0,0,0,.3)}
+
+    .cards{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(190px,1fr))}
+    .mini-card{padding:1.05rem;background:linear-gradient(180deg,var(--card-top),var(--cream));border:1px solid var(--line);border-radius:10px;box-shadow:0 10px 20px rgba(0,0,0,.4)}.mini-card b{display:block;line-height:1.25}.mini-card small{display:block;margin-top:.4rem;color:var(--ink-soft);font-weight:760;font-size:.86rem}.mini-card code{color:var(--rust)}
+    .label{display:inline-flex;margin-bottom:.55rem;padding:.28rem .55rem;border-radius:999px;background:var(--shell);border:1px solid var(--line);color:var(--rust);font-size:.72rem;font-weight:1000;letter-spacing:.07em;text-transform:uppercase}
+
+    /* tabbed info card — index card stays daylight */
+    .prose > .info-card{margin-top:3.7em}
+    .info-card{position:relative;padding:1.9rem 1.5rem 1.4rem;background:linear-gradient(180deg,#FCF6DF,#F5E9C4);border:1px solid #E8D9A8;border-radius:10px;box-shadow:0 20px 38px rgba(0,0,0,.5);color:#1E2A38}.info-card:before{content:attr(data-tab);position:absolute;left:1.2rem;top:-1.35rem;padding:.5rem .9rem;background:linear-gradient(180deg,#fffaf0,#F6EDD8);border:1px solid #E8D9A8;border-radius:8px;box-shadow:0 5px 0 rgba(0,0,0,.3);color:#1E2A38;font-size:.78rem;font-weight:1000;letter-spacing:.12em;text-transform:uppercase}.info-card h3{margin-bottom:.4rem}.info-card code{background:#F6EDD8;border:1px solid #E2D5B4;color:#7a3a2c}.info-card .lede,.info-card p{color:#43536A!important}
+
+    /* code card — navy glows harder at night */
+    .code-card{background:linear-gradient(180deg,var(--navy-top),var(--navy-bottom));border:1px solid #060c14;border-radius:10px;box-shadow:inset 0 1px 0 rgba(255,255,255,.1),0 16px 30px rgba(0,0,0,.55);overflow:hidden}
+    .code-card .bar{display:flex;align-items:center;gap:.45rem;padding:.6rem .85rem;border-bottom:1px solid rgba(255,255,255,.07)}
+    .code-card .bar i{width:11px;height:11px;border-radius:999px;display:block}.code-card .bar .fn{margin-left:.5rem;color:#7E92AC;font-size:.78rem;font-weight:760;font-family:ui-monospace,monospace}
+    .code-card pre{margin:0;padding:1.05rem 1.15rem;overflow:auto;color:#fff7df;font-size:.9rem;line-height:1.6}
+    .code-card .c{color:#6B7E96}.code-card .k{color:var(--yolk)}.code-card .s{color:var(--sage)}.code-card .f{color:var(--sky)}
+  </style>
+</head>
+<body>
+  <article class="prose">
+
+    <!-- ── HEADER ───────────────────────────────────────────────────── -->
+    <span class="eyebrow">Field guide · article reference</span>
+    <h1>The branded article</h1>
+    <p class="lede">The same reading column, night shift. Surfaces go to ink, the yolk glows harder, and the paper notes stay daylight.</p>
+    <div class="byline">
+      <img src="assets/john-lindquist-avatar.png" alt="Author avatar">
+      <span>Drafted by Eggo · ~5 min read · June 2026</span>
+    </div>
+    <div class="rule"></div>
+
+    <figure class="breakout hero-fig">
+      <div class="frame"><img src="assets/eggo-focused-fork.png" alt="Eggo inspecting linked reference cards with a magnifying glass."></div>
+    </figure>
+
+    <!-- ── BODY ─────────────────────────────────────────────────────── -->
+    <p>The reading column is the whole design. One measure, around 66 characters wide, set in round and friendly Nunito so it moves at 2× speed. Everything else — figures, code, cards — earns its place by <em>breaking out</em> of that column when it needs the room, then handing the width straight back.</p>
+
+    <p>Keep paragraphs to a breath or two. When a sentence wants to sprawl, cut it into two. The page is a workbench, not a wall of text: every few paragraphs, hand the reader something to look at.</p>
+
+    <h2>Lead with the one idea</h2>
+    <p>The lede earns the scroll. State the single thing the reader walks away with, in plain language, before any setup. Everything after is evidence for that promise. One idea per article — spin the rest into their own.</p>
+
+    <div class="field-rule"><strong>House rule:</strong> if you can't say what the reader will learn in one sentence, the article isn't ready to write yet.</div>
+
+    <h2>Show the work in code</h2>
+    <p>Snippets get a dark terminal so they read as <em>doing</em>, not describing. Keep them short enough to scan — the smallest runnable thing that makes the point, nothing more. A code block can break out wider than the prose when the lines need it.</p>
+
+    <div class="code-card breakout">
+      <div class="bar"><i style="background:#E06C5E"></i><i style="background:#F7C948"></i><i style="background:#9DBE8D"></i><span class="fn">terminal</span></div>
+      <pre><span class="c"># the smallest thing that proves the point</span>
+<span class="k">npx</span> create-egghead-article <span class="s">"the-branded-article"</span> <span class="k">--template</span> field-guide
+
+<span class="c"># inline code reads like this: </span><span class="f">git push origin master</span></pre>
+    </div>
+
+    <p>Use inline <code>code</code> for names, flags, and short commands inside a sentence. Save the navy card for anything you'd actually run or copy.</p>
+
+    <h2>Break out when it helps</h2>
+    <p>Three widths, one column. Most content sits in the reading measure. Figures and code step out to <code>breakout</code>. A full-bleed band uses <code>full</code> — sparingly, for a hero moment or a wide diagram.</p>
+
+    <div class="cards breakout">
+      <article class="mini-card"><span class="label">Content</span><b>The reading measure.</b><small>~66ch. Prose, headings, lists, asides.</small></article>
+      <article class="mini-card"><span class="label">Breakout</span><b>A little wider.</b><small>Figures, code cards, card rows.</small></article>
+      <article class="mini-card"><span class="label">Full</span><b>Edge to edge.</b><small>Hero bands and wide diagrams.</small></article>
+    </div>
+
+    <figure class="breakout">
+      <img src="assets/eggo-workspace-handoff.png" alt="Eggo holding up a labelled workspace board.">
+      <figcaption>Pair each claim with a picture of it being true.</figcaption>
+    </figure>
+
+    <h2>Keep the rhythm</h2>
+    <p>Prose carries the argument; the accents keep it from going flat. A <strong>field rule</strong> flags a boundary or a warning. A <strong>sticky note</strong> interrupts in Eggo's own hand. A <strong>pull quote</strong> lets one line breathe.</p>
+
+    <p class="pull breakout">Drawn, not rendered. <span>The egg does not crack.</span></p>
+
+    <figure class="breakout">
+      <img src="assets/eggo-autonomy-loop.png" alt="Eggo guiding a loop of script timing, agent judgment, read-screen, and human review.">
+      <figcaption>A figure can carry a whole process at a glance.</figcaption>
+    </figure>
+
+    <p>Lists are fine when the content is genuinely a list — steps, options, a checklist — and prose everywhere else:</p>
+    <ul>
+      <li>One idea, stated up top, proven below.</li>
+      <li>Short paragraphs, generous spacing, real bold (Nunito has the weights).</li>
+      <li>Code in the navy card; names and flags inline.</li>
+      <li>Figures and code break out; the column always comes back.</li>
+    </ul>
+
+    <h2>Land it</h2>
+    <p>The last section points forward — the thing to try, the next article, the video that goes with it. An article that pairs with a recording should name it right here, where the reader is ready to act.</p>
+
+    <aside class="info-card breakout" data-tab="Before you ship">
+      <h3>Two shifts, one source</h3>
+      <p style="margin:0">This reference ships as <code>article.html</code> (day) and <code>article-dark.html</code> (night) — the same prose grid and tokens, inverted. Start your next article by copying one file and replacing the words.</p>
+    </aside>
+
+  </article>
+</body>
+</html>

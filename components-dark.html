@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>egghead — ooh, buttons! · a tactile UI kit (night shift)</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400..1000&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          // night shift: same names, inverted roles — markup stays close to the light kit
+          paper:   '#0D141F',
+          cream:   '#F2EAD8',
+          shell:   '#101926',
+          yolk:    '#F7C948',
+          'yolk-deep': '#E8B229',
+          'yolk-shadow': '#C28E12',
+          ink:     '#EDE4D3',
+          'ink-soft': '#9AABC0',
+          rust:    '#C2664E',
+          sky:     '#A8D4E2',
+          sage:    '#9DBE8D',
+          navy:    '#1E2A38',
+        },
+        fontFamily: {
+          sans: ['Nunito', 'system-ui', 'sans-serif'],
+          hand: ['Caveat', 'cursive'],
+        },
+        boxShadow: {
+          // raised tactile button: bottom bevel + inner top highlight + black ambient
+          'btn': '0 1px 0 rgba(255,255,255,.55) inset, 0 3px 0 #B8860F, 0 8px 14px -3px rgba(0,0,0,.55)',
+          'btn-hover': '0 1px 0 rgba(255,255,255,.6) inset, 0 3px 0 #B8860F, 0 12px 20px -4px rgba(0,0,0,.6)',
+          'btn-press': '0 2px 4px rgba(0,0,0,.45) inset, 0 1px 0 rgba(255,255,255,.08)',
+          'btn-dark': '0 1px 0 rgba(255,255,255,.12) inset, 0 3px 0 #0A1119, 0 8px 14px -3px rgba(0,0,0,.6)',
+          'btn-ghost': '0 1px 0 rgba(255,255,255,.10) inset, 0 -2px 0 rgba(0,0,0,.30) inset, 0 2px 0 #0B121C, 0 4px 8px -2px rgba(0,0,0,.5)',
+          'card': '0 1px 0 rgba(255,255,255,.07) inset, 0 1px 2px rgba(0,0,0,.35), 0 12px 28px -8px rgba(0,0,0,.55), 0 2px 4px -1px rgba(0,0,0,.3)',
+          'card-deep': '0 1px 0 rgba(255,255,255,.09) inset, 0 16px 40px -10px rgba(0,0,0,.65), 0 4px 8px -2px rgba(0,0,0,.4)',
+          'well': 'inset 0 2px 6px rgba(0,0,0,.55), inset 0 1px 2px rgba(0,0,0,.6), 0 1px 0 rgba(255,255,255,.06)',
+          'sticky': '0 2px 4px rgba(0,0,0,.35), 0 10px 20px -5px rgba(0,0,0,.55)',
+          'knob': '0 1px 0 rgba(255,255,255,.14) inset, 0 -2px 3px rgba(0,0,0,.35) inset, 0 3px 6px rgba(0,0,0,.55)',
+          'tab-up': '0 1px 0 rgba(255,255,255,.08) inset, 0 -4px 8px -4px rgba(0,0,0,.4)',
+        },
+        backgroundImage: {
+          'yolk-grad': 'linear-gradient(180deg, #FFD968 0%, #F7C948 45%, #EFB838 100%)',
+          'navy-grad': 'linear-gradient(180deg, #344660 0%, #243246 55%, #1C2839 100%)',
+          'cream-grad': 'linear-gradient(180deg, #28394E 0%, #1E2C3E 100%)',
+          'shell-grad': 'linear-gradient(180deg, #22303F 0%, #141E2A 100%)',
+          'rust-grad': 'linear-gradient(180deg, #B5604E 0%, #A05040 55%, #8F4536 100%)',
+          'sky-grad': 'linear-gradient(180deg, #C2E2EE 0%, #A8D4E2 60%, #95C6D7 100%)',
+        },
+        borderRadius: { 'xl2': '1.25rem' },
+      }
+    }
+  }
+</script>
+<style type="text/tailwindcss">
+  body {
+    background-color: #0A101A;
+    background-image:
+      radial-gradient(ellipse 80% 60% at 50% -10%, rgba(70,110,160,.22), transparent),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 .65 0 0 0 0 .75 0 0 0 0 .95 0 0 0 .04 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .press:active { transform: translateY(2px); box-shadow: 0 2px 4px rgba(0,0,0,.45) inset, 0 1px 0 rgba(255,255,255,.08) !important; }
+  .press { transition: transform .08s ease, box-shadow .12s ease, filter .12s ease; touch-action: manipulation; -webkit-tap-highlight-color: transparent; -webkit-user-select: none; user-select: none; }
+  @media (hover: hover) { .press:hover { filter: brightness(1.08); } }
+</style>
+</head>
+<body class="font-sans text-ink antialiased min-h-screen">
+
+<div class="max-w-5xl mx-auto px-6 py-14 space-y-16">
+
+  <!-- ============ HEADER ============ -->
+  <header class="text-center space-y-3">
+    <div class="inline-flex items-center gap-3.5">
+      <!-- eggo logomark: codex skeuo rendition of the official mark -->
+      <img src="assets/thumbs/logomark-skeuo.png" alt="egghead logomark" width="54" height="54" class="drop-shadow-[0_4px_6px_rgba(0,0,0,.6)]" />
+      <h1 class="text-4xl font-black tracking-tight">egghead <span class="text-ink-soft font-bold">/ ooh, buttons! <span class="font-bold text-ink-soft/60">— a tactile UI kit</span></span></h1>
+    </div>
+    <p class="font-hand text-2xl text-rust rotate-[-1deg]">having fun IS the work — go on, press something. ✏️</p>
+  </header>
+
+  <!-- ============ BUTTONS ============ -->
+  <section class="space-y-6">
+    <h2 class="text-sm font-extrabold uppercase tracking-[0.2em] text-rust">Buttons</h2>
+
+    <div class="bg-cream-grad rounded-2xl shadow-card border border-[#2A3A4F] p-8 flex flex-wrap items-center gap-5">
+
+      <!-- primary -->
+      <button class="press bg-yolk-grad text-navy font-extrabold text-base px-7 pt-[15px] pb-[13px] rounded-xl shadow-btn hover:shadow-btn-hover border border-yolk-shadow/40">
+        <span class="inline-flex items-center gap-2.5">
+          <svg width="13" height="14" viewBox="0 0 13 14" fill="currentColor"><path d="M1 1.8c0-.8.9-1.3 1.6-.9l9 5.2c.7.4.7 1.4 0 1.8l-9 5.2c-.7.4-1.6-.1-1.6-.9V1.8z"/></svg>
+          Start learning
+        </span>
+      </button>
+
+      <!-- primary large pill -->
+      <button class="press bg-yolk-grad text-navy font-extrabold text-lg px-9 pt-[17px] pb-[15px] rounded-full shadow-btn hover:shadow-btn-hover border border-yolk-shadow/40">
+        Create free account
+      </button>
+
+      <!-- navy -->
+      <button class="press bg-navy-grad text-cream font-extrabold px-7 pt-[15px] pb-[13px] rounded-xl shadow-btn-dark border border-black/40">
+        <span class="inline-flex items-center gap-2">Explore the path
+          <svg width="15" height="12" viewBox="0 0 15 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 6h12M9 1.5L13.5 6 9 10.5"/></svg>
+        </span>
+      </button>
+
+      <!-- ghost / paper -->
+      <button class="press bg-cream-grad text-ink font-bold px-7 pt-[15px] pb-[13px] rounded-xl shadow-btn-ghost border border-[#36485F]">
+        View all lessons
+      </button>
+
+      <!-- rust -->
+      <button class="press bg-rust-grad text-cream font-extrabold px-7 pt-[15px] pb-[13px] rounded-xl border border-[#7E3C2E] [box-shadow:0_1px_0_rgba(255,255,255,.25)_inset,0_3px_0_#7E3C2E,0_8px_14px_-3px_rgba(0,0,0,.55)]">
+        Subscribe
+      </button>
+
+      <!-- small + icon button -->
+      <button class="press bg-cream-grad text-ink font-bold text-sm px-4 py-2 rounded-lg shadow-btn-ghost border border-[#36485F]">＋ Add to path</button>
+
+      <button aria-label="bookmark" class="press w-12 h-12 grid place-items-center rounded-xl bg-cream-grad shadow-btn-ghost border border-[#36485F] text-ink-soft">
+        <svg width="16" height="20" viewBox="0 0 16 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M2 2.5C2 1.7 2.7 1 3.5 1h9c.8 0 1.5.7 1.5 1.5V19l-6-4.5L2 19V2.5z"/></svg>
+      </button>
+
+      <!-- disabled -->
+      <button disabled class="bg-shell text-ink/35 font-bold px-7 py-3.5 rounded-xl shadow-well border border-[#36485F] cursor-not-allowed">
+        Coming soon
+      </button>
+    </div>
+  </section>
+
+  <!-- ============ INPUTS & CONTROLS ============ -->
+  <section class="space-y-6">
+    <h2 class="text-sm font-extrabold uppercase tracking-[0.2em] text-rust">Inputs &amp; Controls</h2>
+
+    <div class="bg-cream-grad rounded-2xl shadow-card border border-[#2A3A4F] p-8 grid md:grid-cols-2 gap-10">
+
+      <div class="space-y-6">
+        <!-- search well -->
+        <label class="block">
+          <span class="text-xs font-extrabold uppercase tracking-wider text-ink-soft mb-2 block">Search</span>
+          <div class="flex items-center gap-3 bg-shell rounded-xl px-4 py-3 shadow-well border border-[#2E3F54]">
+            <svg width="17" height="17" viewBox="0 0 17 17" fill="none" stroke="#43536A" stroke-width="2" stroke-linecap="round"><circle cx="7" cy="7" r="5.5"/><path d="M11.5 11.5L15.5 15.5"/></svg>
+            <input type="text" placeholder="Search lessons…" class="bg-transparent outline-none w-full placeholder:text-ink/35 font-semibold" />
+            <kbd class="text-[10px] font-extrabold bg-cream-grad rounded-md px-1.5 py-0.5 shadow-btn-ghost border border-[#36485F] text-ink-soft">⌘K</kbd>
+          </div>
+        </label>
+
+        <!-- email + inset submit -->
+        <label class="block">
+          <span class="text-xs font-extrabold uppercase tracking-wider text-ink-soft mb-2 block">Newsletter</span>
+          <div class="flex items-center gap-2 bg-shell rounded-full p-1.5 pl-5 shadow-well border border-[#2E3F54]">
+            <input type="email" placeholder="you@example.com" class="bg-transparent outline-none w-full placeholder:text-ink/35 font-semibold" />
+            <button class="press shrink-0 bg-yolk-grad text-navy font-extrabold text-sm px-5 pt-[11px] pb-[9px] rounded-full shadow-btn border border-yolk-shadow/40">Subscribe</button>
+          </div>
+          <span class="font-hand text-lg text-ink-soft block mt-1.5 rotate-[-0.5deg]">no spam. just signal. ✓</span>
+        </label>
+
+        <!-- checkboxes -->
+        <div class="space-y-2.5">
+          <span class="text-xs font-extrabold uppercase tracking-wider text-ink-soft block">What Eggo learned today</span>
+          <label class="flex items-center gap-3 cursor-pointer group">
+            <span class="w-6 h-6 rounded-md bg-yolk-grad shadow-btn border border-yolk-shadow/40 grid place-items-center">
+              <svg width="12" height="10" viewBox="0 0 12 10" fill="none" stroke="#1E2A38" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1.5 5.5L4.5 8.5L10.5 1.5"/></svg>
+            </span>
+            <span class="font-bold">Work with AI, not just in it</span>
+          </label>
+          <label class="flex items-center gap-3 cursor-pointer group">
+            <span class="w-6 h-6 rounded-md bg-yolk-grad shadow-btn border border-yolk-shadow/40 grid place-items-center">
+              <svg width="12" height="10" viewBox="0 0 12 10" fill="none" stroke="#1E2A38" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1.5 5.5L4.5 8.5L10.5 1.5"/></svg>
+            </span>
+            <span class="font-bold">Build repeatable workflows</span>
+          </label>
+          <label class="flex items-center gap-3 cursor-pointer">
+            <span class="w-6 h-6 rounded-md bg-shell shadow-well border border-[#36485F]"></span>
+            <span class="font-bold text-ink-soft">Ship more, context switch less</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="space-y-7">
+        <!-- toggles -->
+        <div class="space-y-3">
+          <span class="text-xs font-extrabold uppercase tracking-wider text-ink-soft block">Toggles</span>
+          <div class="flex items-center gap-4">
+            <span class="relative w-16 h-9 rounded-full bg-yolk-grad shadow-well border border-yolk-shadow/40 cursor-pointer">
+              <span class="absolute right-1 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-cream-grad shadow-knob border border-[#36485F]"></span>
+            </span>
+            <span class="font-bold">Autoplay next lesson</span>
+          </div>
+          <div class="flex items-center gap-4">
+            <span class="relative w-16 h-9 rounded-full bg-shell shadow-well border border-[#36485F] cursor-pointer">
+              <span class="absolute left-1 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-cream-grad shadow-knob border border-[#36485F]"></span>
+            </span>
+            <span class="font-bold text-ink-soft">Email digests</span>
+          </div>
+        </div>
+
+        <!-- segmented control -->
+        <div class="space-y-2">
+          <span class="text-xs font-extrabold uppercase tracking-wider text-ink-soft block">Playback speed</span>
+          <div class="inline-flex bg-shell rounded-xl p-1.5 shadow-well border border-[#2E3F54] gap-1">
+            <button class="px-4 py-1.5 rounded-lg font-bold text-sm text-ink-soft press">1×</button>
+            <button class="px-4 py-1.5 rounded-lg font-extrabold text-sm bg-cream-grad shadow-btn-ghost border border-[#36485F]">1.5×</button>
+            <button class="px-4 py-1.5 rounded-lg font-bold text-sm text-ink-soft press">2×</button>
+            <button class="px-4 py-1.5 rounded-lg font-bold text-sm text-ink-soft press">2.5×</button>
+          </div>
+        </div>
+
+        <!-- progress (display only — no knob, progress isn't draggable) -->
+        <div class="space-y-2">
+          <span class="text-xs font-extrabold uppercase tracking-wider text-ink-soft block">Lesson progress · 12:34 / 20:00</span>
+          <div class="relative h-5 bg-shell rounded-full shadow-well border border-[#2E3F54] p-1">
+            <div class="h-full w-[62%] bg-yolk-grad rounded-full shadow-[0_1px_0_rgba(255,255,255,.5)_inset,0_-1px_2px_rgba(0,0,0,.15)_inset] relative overflow-hidden">
+              <div class="absolute inset-x-1.5 top-0.5 h-0.5 bg-white/40 rounded-full"></div>
+            </div>
+            <!-- chapter ticks -->
+            <span class="absolute top-1/2 -translate-y-1/2 left-[25%] w-1 h-1 rounded-full bg-ink/25"></span>
+            <span class="absolute top-1/2 -translate-y-1/2 left-[50%] w-1 h-1 rounded-full bg-ink/25"></span>
+            <span class="absolute top-1/2 -translate-y-1/2 left-[80%] w-1 h-1 rounded-full bg-ink/25"></span>
+          </div>
+        </div>
+
+        <!-- slider (controllable — volume gets the knob) -->
+        <div class="space-y-2">
+          <span class="text-xs font-extrabold uppercase tracking-wider text-ink-soft block">Volume</span>
+          <div class="relative h-4 bg-shell rounded-full shadow-well border border-[#2E3F54]">
+            <div class="absolute inset-y-1 left-1 w-[45%] bg-yolk-grad rounded-full shadow-[0_1px_0_rgba(255,255,255,.5)_inset,0_-1px_2px_rgba(0,0,0,.15)_inset]"></div>
+            <div class="absolute top-1/2 left-[45%] -translate-y-1/2 -translate-x-1/2 w-7 h-7 rounded-full bg-cream-grad shadow-knob border border-[#36485F] cursor-grab"></div>
+          </div>
+        </div>
+
+        <!-- volume knob, why not -->
+        <div class="flex items-center gap-5">
+          <div class="relative w-20 h-20 rounded-full bg-cream-grad shadow-knob border border-[#36485F] grid place-items-center">
+            <div class="w-14 h-14 rounded-full bg-shell-grad shadow-well grid place-items-center">
+              <div class="w-1.5 h-5 bg-rust rounded-full -translate-y-2 rotate-45 origin-bottom"></div>
+            </div>
+            <span class="absolute -bottom-1 -right-1 bg-yolk-grad text-navy text-[10px] font-black px-1.5 py-0.5 rounded-full shadow-btn border border-yolk-shadow/40">70</span>
+          </div>
+          <span class="font-hand text-2xl text-ink-soft rotate-[-2deg]">an actual knob,<br/>because we can</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ BADGES, TAGS, PROGRESS ============ -->
+  <section class="space-y-6">
+    <h2 class="text-sm font-extrabold uppercase tracking-[0.2em] text-rust">Badges &amp; Progress</h2>
+
+    <div class="bg-cream-grad rounded-2xl shadow-card border border-[#2A3A4F] p-8 space-y-8">
+
+      <div class="flex flex-wrap items-center gap-3">
+        <span class="bg-yolk-grad text-navy text-xs font-black uppercase tracking-wider px-3.5 pt-[7px] pb-[5px] rounded-full shadow-btn border border-yolk-shadow/40">Start here</span>
+        <span class="bg-rust-grad text-cream text-xs font-black uppercase tracking-wider px-3.5 py-1.5 rounded-full border border-[#7E3C2E] [box-shadow:0_1px_0_rgba(255,255,255,.25)_inset,0_-2px_0_rgba(0,0,0,.2)_inset,0_2px_4px_rgba(0,0,0,.45)]">Claude Code</span>
+        <span class="bg-sky-grad text-navy text-xs font-black uppercase tracking-wider px-3.5 py-1.5 rounded-full border border-[#86B8C9] [box-shadow:0_1px_0_rgba(255,255,255,.5)_inset,0_-2px_0_rgba(0,0,0,.1)_inset,0_2px_4px_rgba(0,0,0,.4)]">Cursor</span>
+        <span class="bg-gradient-to-b from-[#AECB9E] to-[#8FB07E] text-navy text-xs font-black uppercase tracking-wider px-3.5 py-1.5 rounded-full border border-[#7FA06E] [box-shadow:0_1px_0_rgba(255,255,255,.5)_inset,0_-2px_0_rgba(0,0,0,.1)_inset,0_2px_4px_rgba(0,0,0,.4)]">MCP</span>
+        <span class="bg-shell text-ink-soft text-xs font-black uppercase tracking-wider px-3.5 py-1.5 rounded-full shadow-well border border-[#36485F]">Automation</span>
+        <span class="inline-flex items-center gap-1.5 bg-cream-grad text-ink text-xs font-extrabold px-3.5 py-1.5 rounded-full shadow-btn-ghost border border-[#36485F]">
+          <span class="w-2 h-2 rounded-full bg-sage shadow-[0_0_4px_#9DBE8D]"></span> 12 courses · 3h 48m
+        </span>
+      </div>
+
+      <!-- progress bars -->
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="space-y-2">
+          <div class="flex justify-between text-sm font-extrabold"><span>Claude Code Mastery</span><span class="text-ink-soft">5 / 6</span></div>
+          <div class="h-5 bg-shell rounded-full shadow-well border border-[#2E3F54] p-1">
+            <div class="h-full w-5/6 bg-yolk-grad rounded-full shadow-[0_1px_0_rgba(255,255,255,.6)_inset,0_-1px_2px_rgba(0,0,0,.18)_inset] relative overflow-hidden">
+              <div class="absolute inset-x-2 top-0.5 h-1 bg-white/40 rounded-full"></div>
+            </div>
+          </div>
+        </div>
+        <div class="space-y-2">
+          <div class="flex justify-between text-sm font-extrabold"><span>MCP &amp; Tools</span><span class="text-ink-soft">3 / 5</span></div>
+          <div class="h-5 bg-shell rounded-full shadow-well border border-[#2E3F54] p-1">
+            <div class="h-full w-3/5 bg-gradient-to-b from-[#AECB9E] to-[#8FB07E] rounded-full shadow-[0_1px_0_rgba(255,255,255,.5)_inset,0_-1px_2px_rgba(0,0,0,.15)_inset] relative overflow-hidden">
+              <div class="absolute inset-x-2 top-0.5 h-1 bg-white/40 rounded-full"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- tabs (notebook side-tabs flavor) -->
+      <div>
+        <div class="flex items-end gap-1.5">
+          <button class="relative top-px z-10 bg-[#28394E] font-extrabold text-sm px-5 pt-3 pb-3 rounded-t-xl border border-b-0 border-[#36485F]">Essentials</button>
+          <button class="press bg-shell-grad font-bold text-sm text-ink-soft px-5 pt-2.5 pb-2 rounded-t-xl border border-b-0 border-[#36485F] shadow-[inset_0_-5px_6px_-4px_rgba(0,0,0,.5),inset_0_1px_0_rgba(255,255,255,.07)]">Claude Code</button>
+          <button class="press bg-shell-grad font-bold text-sm text-ink-soft px-5 pt-2.5 pb-2 rounded-t-xl border border-b-0 border-[#36485F] shadow-[inset_0_-5px_6px_-4px_rgba(0,0,0,.5),inset_0_1px_0_rgba(255,255,255,.07)]">Cursor</button>
+          <button class="press bg-shell-grad font-bold text-sm text-ink-soft px-5 pt-2.5 pb-2 rounded-t-xl border border-b-0 border-[#36485F] shadow-[inset_0_-5px_6px_-4px_rgba(0,0,0,.5),inset_0_1px_0_rgba(255,255,255,.07)]">MCP</button>
+        </div>
+        <div class="bg-cream-grad rounded-xl rounded-tl-none border border-[#36485F] shadow-btn-ghost p-5 font-semibold text-ink-soft">
+          The fundamentals you need to work effectively with AI tools and agents.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CARDS ============ -->
+  <section class="space-y-6">
+    <h2 class="text-sm font-extrabold uppercase tracking-[0.2em] text-rust">Cards</h2>
+
+    <div class="grid md:grid-cols-3 gap-6 items-start">
+
+      <!-- CTA card -->
+      <div class="bg-cream-grad rounded-2xl shadow-card-deep border border-[#2A3A4F] p-7 text-center space-y-4">
+        <span class="text-[11px] font-black uppercase tracking-[0.18em] text-rust">New to egghead?</span>
+        <h3 class="text-2xl font-black leading-tight">Start small.<br/>Build forward.</h3>
+        <p class="font-semibold text-ink-soft text-sm">Save time. Learn deeply.<br/>Ship with confidence.</p>
+        <!-- eggo unboxing -->
+        <img src="assets/thumbs/spot-eggo-unboxing.png" alt="Eggo popping out of a cardboard box"
+             class="mx-auto w-40 drop-shadow-[0_6px_10px_rgba(0,0,0,.55)]" />
+        <button class="press w-full bg-yolk-grad text-navy font-extrabold px-6 pt-[15px] pb-[13px] rounded-full shadow-btn hover:shadow-btn-hover border border-yolk-shadow/40">Create free account</button>
+      </div>
+
+      <!-- lesson row card -->
+      <div class="bg-cream-grad rounded-2xl shadow-card border border-[#2A3A4F] overflow-hidden md:col-span-2">
+        <div class="px-6 py-4 flex items-center justify-between border-b border-[#243246]">
+          <span class="font-black text-lg">⚡ Latest lessons</span>
+          <button class="press text-sm font-extrabold text-ink-soft bg-cream-grad px-3.5 py-1.5 rounded-lg shadow-btn-ghost border border-[#36485F]">View all →</button>
+        </div>
+
+        <div class="divide-y divide-[#243246]">
+          <!-- row -->
+          <div class="flex items-center gap-4 px-6 py-4 hover:bg-white/5 transition-colors">
+            <div class="relative shrink-0 w-28 h-[4.2rem] bg-navy-grad rounded-lg shadow-btn-dark border border-black/40 overflow-hidden">
+              <div class="absolute inset-2 space-y-1">
+                <div class="h-1 w-3/4 bg-sage/70 rounded-full"></div>
+                <div class="h-1 w-1/2 bg-cream/40 rounded-full"></div>
+                <div class="h-1 w-2/3 bg-yolk/60 rounded-full"></div>
+              </div>
+              <span class="absolute bottom-1 right-1.5 bg-black/60 text-cream text-[10px] font-bold px-1 rounded">12:34</span>
+            </div>
+            <div class="min-w-0">
+              <span class="text-[10px] font-black uppercase tracking-wider text-rust">Claude Code</span>
+              <p class="font-extrabold leading-snug truncate">Use hooks to enforce code quality</p>
+              <p class="text-sm font-semibold text-ink-soft truncate">PreToolUse and PostToolUse hooks in action.</p>
+            </div>
+            <button class="press ml-auto shrink-0 w-10 h-10 grid place-items-center rounded-lg bg-cream-grad shadow-btn-ghost border border-[#36485F] text-ink-soft">
+              <svg width="13" height="16" viewBox="0 0 16 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M2 2.5C2 1.7 2.7 1 3.5 1h9c.8 0 1.5.7 1.5 1.5V19l-6-4.5L2 19V2.5z"/></svg>
+            </button>
+          </div>
+          <!-- row -->
+          <div class="flex items-center gap-4 px-6 py-4 hover:bg-white/5 transition-colors">
+            <div class="relative shrink-0 w-28 h-[4.2rem] bg-navy-grad rounded-lg shadow-btn-dark border border-black/40 overflow-hidden">
+              <div class="absolute inset-2 space-y-1">
+                <div class="h-1 w-2/3 bg-sky/70 rounded-full"></div>
+                <div class="h-1 w-3/4 bg-cream/40 rounded-full"></div>
+                <div class="h-1 w-1/3 bg-rust/80 rounded-full"></div>
+              </div>
+              <span class="absolute bottom-1 right-1.5 bg-black/60 text-cream text-[10px] font-bold px-1 rounded">9:47</span>
+            </div>
+            <div class="min-w-0">
+              <span class="text-[10px] font-black uppercase tracking-wider text-[#7FB6CC]">MCP</span>
+              <p class="font-extrabold leading-snug truncate">Delegate tasks with subagents</p>
+              <p class="text-sm font-semibold text-ink-soft truncate">Break work down. Run in parallel.</p>
+            </div>
+            <button class="press ml-auto shrink-0 w-10 h-10 grid place-items-center rounded-lg bg-cream-grad shadow-btn-ghost border border-[#36485F] text-ink-soft">
+              <svg width="13" height="16" viewBox="0 0 16 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M2 2.5C2 1.7 2.7 1 3.5 1h9c.8 0 1.5.7 1.5 1.5V19l-6-4.5L2 19V2.5z"/></svg>
+            </button>
+          </div>
+          <!-- learning path row -->
+          <div class="flex items-center gap-4 px-6 py-4 hover:bg-white/5 transition-colors">
+            <span class="shrink-0 w-11 h-11 grid place-items-center rounded-xl bg-yolk-grad text-navy shadow-btn border border-yolk-shadow/40 font-black text-sm">CC</span>
+            <div class="min-w-0 flex-1">
+              <p class="font-extrabold leading-snug">Claude Code Mastery</p>
+              <div class="mt-1.5 h-3 bg-shell rounded-full shadow-well border border-[#2E3F54] p-0.5 max-w-[14rem]">
+                <div class="h-full w-5/6 bg-yolk-grad rounded-full"></div>
+              </div>
+            </div>
+            <span class="text-sm font-bold text-ink-soft shrink-0">2h 19m</span>
+            <button class="press shrink-0 w-9 h-9 grid place-items-center rounded-lg bg-cream-grad shadow-btn-ghost border border-[#36485F] font-black text-ink-soft">→</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ STICKY NOTES & PAPER ============ -->
+  <section class="space-y-6">
+    <h2 class="text-sm font-extrabold uppercase tracking-[0.2em] text-rust">Sticky Notes &amp; Paper</h2>
+
+    <div class="flex flex-wrap items-start gap-8 p-2">
+
+      <!-- yellow sticky -->
+      <div class="relative w-52 bg-gradient-to-b from-[#FBEFA9] to-[#F3DF7E] p-5 pt-7 shadow-sticky rotate-[-2.5deg] rounded-[2px]">
+        <span class="absolute -top-2.5 left-1/2 -translate-x-1/2 w-16 h-5 bg-[#E8D9A8]/80 rotate-[2deg] shadow-sm"></span>
+        <p class="font-hand text-2xl leading-tight text-[#1E2A38]">Today's focus:<br/>Ship better agent workflows.</p>
+        <span class="font-hand text-xl block mt-2 text-[#43536A]">— ☆</span>
+      </div>
+
+      <!-- blue sticky -->
+      <div class="relative w-48 bg-gradient-to-b from-[#D3E9F2] to-[#BBDCE9] p-5 pt-7 shadow-sticky rotate-[1.5deg] rounded-[2px]">
+        <span class="absolute -top-2.5 left-1/2 -translate-x-1/2 w-14 h-5 bg-[#E8D9A8]/80 rotate-[-3deg] shadow-sm"></span>
+        <p class="font-hand text-2xl leading-tight text-[#1E2A38]">Progress,<br/>not perfection. ♡</p>
+      </div>
+
+      <!-- index card / start here note -->
+      <div class="relative w-80 bg-gradient-to-b from-[#FCF6DF] to-[#F5E9C4] rounded-lg shadow-card-deep border border-[#E8D9A8] p-6 rotate-[1deg] text-[#1E2A38]">
+        <span class="absolute -top-3 left-6 bg-cream-grad text-ink text-[10px] font-black uppercase tracking-[0.15em] px-3 py-1.5 rounded-md shadow-btn-ghost border border-[#36485F]">Start here</span>
+        <span class="absolute top-3 right-3 w-8 h-8 bg-sky-grad rounded-sm shadow-sm [clip-path:polygon(0_0,100%_0,100%_100%)]"></span>
+        <h3 class="text-xl font-black mt-1">AI Dev Essentials</h3>
+        <p class="text-sm font-semibold text-[#43536A] mt-1 mb-4">The fundamentals you need to work effectively with AI tools and agents.</p>
+        <ul class="space-y-2 text-sm font-bold">
+          <li class="flex items-center gap-2"><span class="w-4.5 h-4.5 w-5 h-5 rounded-full bg-sage/30 border border-sage grid place-items-center text-[10px] text-[#5C7A4C]">✓</span> Work with AI, not just in it</li>
+          <li class="flex items-center gap-2"><span class="w-5 h-5 rounded-full bg-sage/30 border border-sage grid place-items-center text-[10px] text-[#5C7A4C]">✓</span> Use tools that compound</li>
+          <li class="flex items-center gap-2"><span class="w-5 h-5 rounded-full bg-sage/30 border border-sage grid place-items-center text-[10px] text-[#5C7A4C]">✓</span> Build repeatable workflows</li>
+        </ul>
+        <button class="press mt-5 bg-yolk-grad text-navy font-extrabold text-sm px-6 pt-[13px] pb-[11px] rounded-xl shadow-btn hover:shadow-btn-hover border border-yolk-shadow/40">Explore the path →</button>
+        <!-- page curl -->
+        <span class="absolute bottom-0 right-0 w-7 h-7 bg-gradient-to-tl from-[#E2D3A4] to-[#F5E9C4] rounded-tl-xl shadow-[-2px_-2px_4px_rgba(120,90,30,.15)] [clip-path:polygon(100%_0,100%_100%,0_100%)]"></span>
+      </div>
+
+      <!-- masking-tape label -->
+      <div class="relative rotate-[-1deg] mt-4">
+        <span class="inline-block bg-[#EDE0B8]/90 px-6 py-2.5 font-hand text-2xl text-[#1E2A38] shadow-sm [clip-path:polygon(2%_8%,98%_0,100%_92%,1%_100%)]">make complex things feel doable →</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ MISC: ALERTS, TOOLTIP, AVATAR ============ -->
+  <section class="space-y-6 pb-10">
+    <h2 class="text-sm font-extrabold uppercase tracking-[0.2em] text-rust">Alerts &amp; Bits</h2>
+
+    <div class="bg-cream-grad rounded-2xl shadow-card border border-[#2A3A4F] p-8 space-y-5">
+
+      <!-- success -->
+      <div class="flex items-center gap-4 bg-gradient-to-b from-[#23301F] to-[#1A2518] rounded-xl px-5 py-4 border border-[#3D5434] shadow-btn-ghost">
+        <span class="w-9 h-9 shrink-0 grid place-items-center rounded-full bg-gradient-to-b from-[#AECB9E] to-[#8FB07E] border border-[#7FA06E] text-navy font-black [box-shadow:0_1px_0_rgba(255,255,255,.45)_inset,0_3px_0_#56713F,0_5px_8px_-2px_rgba(0,0,0,.5)]">✓</span>
+        <div><p class="font-extrabold">Lesson shipped!</p><p class="text-sm font-semibold text-ink-soft">“Filesystem MCP server in 20 minutes” is now live.</p></div>
+        <button class="press ml-auto text-sm font-extrabold bg-cream-grad px-4 py-2 rounded-lg shadow-btn-ghost border border-[#36485F]">View</button>
+      </div>
+
+      <!-- warning -->
+      <div class="flex items-center gap-4 bg-gradient-to-b from-[#352C12] to-[#28210D] rounded-xl px-5 py-4 border border-[#5B4B1E] shadow-btn-ghost">
+        <span class="w-9 h-9 shrink-0 grid place-items-center rounded-full bg-yolk-grad shadow-btn border border-yolk-shadow/40 text-navy font-black">!</span>
+        <div><p class="font-extrabold">Heads up — this costs real tokens.</p><p class="text-sm font-semibold text-ink-soft">~$2.40 per run. Worth it, but you should know.</p></div>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-8 pt-2">
+        <!-- avatar + counter -->
+        <div class="flex items-center gap-3">
+          <span class="w-12 h-12 rounded-full bg-gradient-to-b from-[#C2D8E4] to-[#9FBfd0] shadow-knob border-2 border-white grid place-items-center font-black text-[#43536A]">JL</span>
+          <div><p class="font-extrabold leading-tight">John Lindquist <span class="text-sky">✔</span></p><p class="text-xs font-bold text-ink-soft">Founder &amp; Instructor</p></div>
+        </div>
+
+        <!-- stat chips -->
+        <div class="flex gap-3">
+          <div class="bg-shell rounded-xl px-4 py-2.5 shadow-well border border-[#2E3F54] text-center"><p class="font-black">1,200+</p><p class="text-[10px] font-extrabold uppercase tracking-wider text-ink-soft">Lessons</p></div>
+          <div class="bg-shell rounded-xl px-4 py-2.5 shadow-well border border-[#2E3F54] text-center"><p class="font-black">180+</p><p class="text-[10px] font-extrabold uppercase tracking-wider text-ink-soft">Courses</p></div>
+          <div class="bg-shell rounded-xl px-4 py-2.5 shadow-well border border-[#2E3F54] text-center"><p class="font-black">12M+</p><p class="text-[10px] font-extrabold uppercase tracking-wider text-ink-soft">Views</p></div>
+        </div>
+
+        <!-- tooltip -->
+        <div class="relative inline-block">
+          <button class="press bg-cream-grad font-bold px-5 py-2.5 rounded-xl shadow-btn-ghost border border-[#36485F]">Hover-ish tooltip</button>
+          <div class="absolute -top-12 left-1/2 -translate-x-1/2 bg-navy-grad text-cream text-xs font-bold px-3.5 py-2 rounded-lg shadow-btn-dark whitespace-nowrap">
+            drawn, not rendered ✏️
+            <span class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2.5 h-2.5 bg-[#1C2839] rotate-45"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ============ LESSON PAGE BITS ============ -->
+  <section class="space-y-6">
+    <h2 class="text-sm font-extrabold uppercase tracking-[0.2em] text-rust">Lesson Page Bits</h2>
+
+    <div class="bg-cream-grad rounded-2xl shadow-card border border-[#2A3A4F] p-8 space-y-8">
+
+      <!-- video player chrome -->
+      <div class="bg-navy-grad rounded-2xl shadow-btn-dark border border-black/40 p-4 space-y-3">
+        <div class="flex items-center gap-4">
+          <button class="press shrink-0 w-12 h-12 grid place-items-center rounded-full bg-yolk-grad shadow-btn border border-yolk-shadow/40">
+            <svg width="15" height="16" viewBox="0 0 13 14" fill="#1E2A38" class="translate-x-[1.5px]"><path d="M1 1.8c0-.8.9-1.3 1.6-.9l9 5.2c.7.4.7 1.4 0 1.8l-9 5.2c-.7.4-1.6-.1-1.6-.9V1.8z"/></svg>
+          </button>
+          <div class="flex-1 space-y-1.5">
+            <div class="relative h-3.5 bg-black/50 rounded-full shadow-[inset_0_2px_4px_rgba(0,0,0,.6)] border border-black/40">
+              <!-- buffered -->
+              <div class="absolute inset-y-0.5 left-0.5 w-[78%] bg-white/10 rounded-full"></div>
+              <!-- played -->
+              <div class="absolute inset-y-0.5 left-0.5 w-[58%] bg-yolk-grad rounded-full shadow-[0_1px_0_rgba(255,255,255,.4)_inset]"></div>
+              <!-- chapter ticks -->
+              <span class="absolute top-1/2 -translate-y-1/2 left-[22%] w-0.5 h-1.5 rounded-full bg-cream/40"></span>
+              <span class="absolute top-1/2 -translate-y-1/2 left-[47%] w-0.5 h-1.5 rounded-full bg-cream/40"></span>
+              <span class="absolute top-1/2 -translate-y-1/2 left-[71%] w-0.5 h-1.5 rounded-full bg-cream/40"></span>
+            </div>
+            <div class="flex justify-between text-[11px] font-bold text-cream/70">
+              <span>7:18</span><span>12:34</span>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 shrink-0">
+            <button class="press text-cream text-xs font-extrabold bg-white/10 px-3 py-2 rounded-lg border border-white/15 shadow-[0_1px_0_rgba(255,255,255,.15)_inset,0_2px_0_rgba(0,0,0,.4)]">1.5×</button>
+            <button class="press text-cream text-xs font-extrabold bg-white/10 px-3 py-2 rounded-lg border border-white/15 shadow-[0_1px_0_rgba(255,255,255,.15)_inset,0_2px_0_rgba(0,0,0,.4)]">CC</button>
+            <button class="press text-cream text-xs font-extrabold bg-white/10 px-3 py-2 rounded-lg border border-white/15 shadow-[0_1px_0_rgba(255,255,255,.15)_inset,0_2px_0_rgba(0,0,0,.4)]">⛶</button>
+          </div>
+        </div>
+        <div class="flex items-center justify-between">
+          <span class="font-hand text-xl text-cream/80 rotate-[-0.5deg]">chapter 3 of 4 — “wire up the hook”</span>
+          <span class="text-[10px] font-black uppercase tracking-wider bg-rust-grad text-cream px-2.5 py-1 rounded-full border border-[#7E3C2E]">Claude Code</span>
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-8">
+        <div class="space-y-6">
+          <!-- mark complete + stamp -->
+          <div class="flex items-center gap-5">
+            <button class="press bg-yolk-grad text-navy font-extrabold px-6 pt-[15px] pb-[13px] rounded-xl shadow-btn hover:shadow-btn-hover border border-yolk-shadow/40">✓ Mark complete</button>
+            <span class="inline-block rotate-[-8deg] text-rust font-black text-xl uppercase tracking-[0.1em] border-[3px] border-rust rounded-lg px-3.5 py-1 opacity-80 [mask-image:url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22120%22 height=%22120%22%3E%3Cfilter id=%22g%22%3E%3CfeTurbulence baseFrequency=%22.7%22/%3E%3CfeColorMatrix values=%220 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .9 .12%22/%3E%3C/filter%3E%3Crect width=%22120%22 height=%22120%22 filter=%22url(%23g)%22/%3E%3C/svg%3E')]">Shipped!</span>
+          </div>
+
+          <!-- egg rating -->
+          <div class="space-y-1.5">
+            <span class="text-xs font-extrabold uppercase tracking-wider text-ink-soft block">Rate this lesson</span>
+            <div class="flex items-center gap-1.5">
+              <svg width="26" height="30" viewBox="0 0 24 28" class="press cursor-pointer"><path d="M12 1.5C7 1.5 3 9.5 3 16c0 6 3.8 10.5 9 10.5S21 22 21 16c0-6.5-4-14.5-9-14.5z" fill="#F7C948" stroke="#C28E12" stroke-width="1.6"/></svg>
+              <svg width="26" height="30" viewBox="0 0 24 28" class="press cursor-pointer"><path d="M12 1.5C7 1.5 3 9.5 3 16c0 6 3.8 10.5 9 10.5S21 22 21 16c0-6.5-4-14.5-9-14.5z" fill="#F7C948" stroke="#C28E12" stroke-width="1.6"/></svg>
+              <svg width="26" height="30" viewBox="0 0 24 28" class="press cursor-pointer"><path d="M12 1.5C7 1.5 3 9.5 3 16c0 6 3.8 10.5 9 10.5S21 22 21 16c0-6.5-4-14.5-9-14.5z" fill="#F7C948" stroke="#C28E12" stroke-width="1.6"/></svg>
+              <svg width="26" height="30" viewBox="0 0 24 28" class="press cursor-pointer"><path d="M12 1.5C7 1.5 3 9.5 3 16c0 6 3.8 10.5 9 10.5S21 22 21 16c0-6.5-4-14.5-9-14.5z" fill="#F7C948" stroke="#C28E12" stroke-width="1.6"/></svg>
+              <svg width="26" height="30" viewBox="0 0 24 28" class="press cursor-pointer"><path d="M12 1.5C7 1.5 3 9.5 3 16c0 6 3.8 10.5 9 10.5S21 22 21 16c0-6.5-4-14.5-9-14.5z" fill="#223043" stroke="#3A4A60" stroke-width="1.6"/></svg>
+              <span class="font-hand text-xl text-ink-soft ml-2">four eggs. solid.</span>
+            </div>
+          </div>
+
+          <!-- keyboard shortcuts -->
+          <div class="space-y-2">
+            <span class="text-xs font-extrabold uppercase tracking-wider text-ink-soft block">Shortcuts</span>
+            <div class="flex flex-wrap items-center gap-x-5 gap-y-2.5 text-sm font-bold text-ink-soft">
+              <span class="inline-flex items-center gap-2"><kbd class="min-w-[2rem] text-center font-extrabold text-ink text-xs bg-cream-grad rounded-lg px-2.5 py-1.5 shadow-btn-ghost border border-[#36485F]">Space</kbd> play / pause</span>
+              <span class="inline-flex items-center gap-2"><kbd class="min-w-[2rem] text-center font-extrabold text-ink text-xs bg-cream-grad rounded-lg px-2.5 py-1.5 shadow-btn-ghost border border-[#36485F]">J</kbd><kbd class="min-w-[2rem] text-center font-extrabold text-ink text-xs bg-cream-grad rounded-lg px-2.5 py-1.5 shadow-btn-ghost border border-[#36485F]">K</kbd> ±10s</span>
+              <span class="inline-flex items-center gap-2"><kbd class="min-w-[2rem] text-center font-extrabold text-ink text-xs bg-cream-grad rounded-lg px-2.5 py-1.5 shadow-btn-ghost border border-[#36485F]">T</kbd> transcript</span>
+            </div>
+          </div>
+
+          <!-- streak -->
+          <div class="inline-flex items-center gap-3 bg-shell rounded-xl px-4 py-3 shadow-well border border-[#2E3F54]">
+            <span class="w-9 h-9 grid place-items-center rounded-full bg-yolk-grad shadow-btn border border-yolk-shadow/40 text-base">⚡</span>
+            <div>
+              <p class="font-extrabold leading-tight">7-day streak</p>
+              <p class="text-xs font-bold text-ink-soft">3 lessons today · keep shipping</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- code block -->
+        <div class="bg-navy-grad rounded-xl shadow-btn-dark border border-black/40 overflow-hidden text-sm">
+          <div class="flex items-center gap-2 px-4 py-2.5 bg-black/30 border-b border-white/10">
+            <span class="w-3 h-3 rounded-full bg-rust shadow-[0_1px_0_rgba(255,255,255,.25)_inset]"></span>
+            <span class="w-3 h-3 rounded-full bg-yolk shadow-[0_1px_0_rgba(255,255,255,.4)_inset]"></span>
+            <span class="w-3 h-3 rounded-full bg-sage shadow-[0_1px_0_rgba(255,255,255,.3)_inset]"></span>
+            <span class="ml-2 text-cream/60 font-bold text-xs">use-hooks.ts</span>
+            <button class="press ml-auto text-cream/80 text-xs font-extrabold bg-white/10 px-3 py-1.5 rounded-md border border-white/15 shadow-[0_1px_0_rgba(255,255,255,.15)_inset,0_2px_0_rgba(0,0,0,.4)]">⧉ Copy</button>
+          </div>
+          <pre class="p-4 leading-relaxed font-mono text-[13px] text-cream/90 overflow-x-auto"><code><span class="text-sky">const</span> <span class="text-yolk">hook</span> = {
+  <span class="text-sage">event</span>: <span class="text-[#E8A87C]">"PostToolUse"</span>,
+  <span class="text-sage">matcher</span>: <span class="text-[#E8A87C]">"Edit|Write"</span>,
+  <span class="text-sage">command</span>: <span class="text-[#E8A87C]">"npm run lint"</span>,
+}</code></pre>
+          <div class="px-4 py-2 bg-black/20 border-t border-white/10">
+            <span class="font-hand text-lg text-cream/60">eggo says: hooks run even when you forget to. that's the point. ✓</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ HOMEPAGE EXPLORATIONS ============ -->
+  <section class="space-y-6 pb-16">
+    <div class="flex items-end justify-between">
+      <div>
+        <h2 class="text-sm font-extrabold uppercase tracking-[0.2em] text-rust">Homepage Explorations</h2>
+        <p class="font-hand text-2xl text-ink-soft rotate-[-0.5deg] mt-1">click any card for the full-size mock ↗</p>
+      </div>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" id="gallery">
+      <!-- cards injected by template below -->
+    </div>
+
+    <script>
+      const shots = [
+        ['fun',     'Field guide notebook',      'homepage-fun-field-guide-notebook'],
+        ['fun',     'Tiny workshop world',       'homepage-fun-tiny-workshop-world'],
+        ['fun',     'Agent flight plan',         'homepage-fun-agent-flight-plan'],
+        ['fun',     'Workbench constellation',   'homepage-fun-workbench-constellation'],
+        ['concept', 'Agent playground',          'homepage-concept-agent-playground'],
+        ['concept', 'Course observatory',        'homepage-concept-course-observatory'],
+        ['concept', 'Markdown machine',          'homepage-concept-markdown-machine'],
+        ['real',    'Agent playground (real)',   'homepage-real-thumbnails-agent-playground'],
+        ['real',    'Dense index',               'homepage-real-thumbnails-dense-index'],
+        ['real',    'Editorial stream',          'homepage-real-thumbnails-editorial-stream'],
+        ['simple',  'Eggo marginalia',           'homepage-simple-eggo-marginalia'],
+        ['simple',  'John / AI Dev Essentials',  'homepage-simple-john-ai-dev-essentials'],
+        ['simple',  'Narrow personal index',     'homepage-simple-narrow-personal-index'],
+      ];
+      const tagStyles = {
+        fun:     'bg-yolk-grad border-yolk-shadow/40 text-navy shadow-btn',
+        concept: 'bg-rust-grad border-[#7E3C2E] text-cream',
+        real:    'bg-sky-grad border-[#86B8C9] text-navy',
+        simple:  'bg-shell border-[#36485F] text-ink-soft shadow-well',
+      };
+      document.getElementById('gallery').innerHTML = shots.map(([tag, title, slug], i) => `
+        <a href="assets/thumbs/${slug}.jpg" target="_blank" rel="noopener"
+           class="group block bg-cream-grad rounded-2xl shadow-card border border-[#2A3A4F] overflow-hidden press"
+           style="--r:${[-0.6,0.5,-0.3,0.4][i % 4]}deg; transform:rotate(var(--r))">
+          <span class="block m-3 mb-0 rounded-xl overflow-hidden shadow-well border border-[#2E3F54] bg-shell">
+            <img src="assets/thumbs/${slug}.jpg" alt="${title}" loading="lazy"
+                 class="w-full aspect-[4/3] object-cover object-top group-hover:scale-[1.02] transition-transform duration-300" />
+          </span>
+          <span class="flex items-center gap-2.5 px-4 py-3.5">
+            <span class="text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full border ${tagStyles[tag]}">${tag}</span>
+            <span class="font-extrabold text-sm truncate">${title}</span>
+            <span class="ml-auto shrink-0 w-8 h-8 grid place-items-center rounded-lg bg-cream-grad shadow-btn-ghost border border-[#36485F] font-black text-ink-soft text-sm group-hover:bg-yolk-grad group-hover:text-navy group-hover:shadow-btn transition-all">↗</span>
+          </span>
+        </a>`).join('');
+    </script>
+  </section>
+
+  <!-- eggo's workbench sign-off -->
+  <footer class="flex items-center justify-center gap-6 pb-6">
+    <figure class="rotate-[-3deg]">
+      <img src="assets/thumbs/spot-eggo-painting-button.jpg" alt="Eggo painting a yellow button"
+           class="w-36 rounded-xl shadow-sticky border-[6px] border-white" />
+      <figcaption class="font-hand text-xl text-ink-soft text-center mt-1.5">fresh coat of yolk</figcaption>
+    </figure>
+    <p class="text-center font-hand text-2xl text-ink-soft max-w-[16rem]">made by developers.<br/>no fluff. all signal. 🥚</p>
+    <figure class="rotate-[2.5deg]">
+      <img src="assets/thumbs/spot-eggo-wrench-toggle.jpg" alt="Eggo tightening a giant toggle with a wrench"
+           class="w-36 rounded-xl shadow-sticky border-[6px] border-white" />
+      <figcaption class="font-hand text-xl text-ink-soft text-center mt-1.5">hand-tightened toggles</figcaption>
+    </figure>
+  </footer>
+
+</div>
+</body>
+</html>

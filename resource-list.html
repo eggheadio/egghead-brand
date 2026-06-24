@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>egghead — resource list · a tactile UI kit</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400..1000&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          paper:   '#FBF3E0',
+          cream:   '#FDF8EC',
+          shell:   '#F6EDD8',
+          yolk:    '#F7C948',
+          'yolk-deep': '#E8B229',
+          'yolk-shadow': '#C28E12',
+          ink:     '#1E2A38',
+          'ink-soft': '#43536A',
+          rust:    '#A05040',
+          sky:     '#A8D4E2',
+          sage:    '#9DBE8D',
+          navy:    '#16222F',
+        },
+        fontFamily: {
+          sans: ['Nunito', 'system-ui', 'sans-serif'],
+          hand: ['Caveat', 'cursive'],
+        },
+        boxShadow: {
+          'btn': '0 1px 0 rgba(255,255,255,.65) inset, 0 3px 0 #C28E12, 0 6px 10px -2px rgba(120,80,10,.35)',
+          'btn-hover': '0 1px 0 rgba(255,255,255,.7) inset, 0 3px 0 #C28E12, 0 9px 16px -3px rgba(120,80,10,.40)',
+          'btn-press': '0 2px 4px rgba(120,80,10,.25) inset, 0 1px 0 rgba(255,255,255,.2)',
+          'btn-dark': '0 1px 0 rgba(255,255,255,.14) inset, 0 3px 0 #0A1119, 0 6px 12px -2px rgba(10,20,30,.5)',
+          'btn-ghost': '0 1px 0 rgba(255,255,255,.8) inset, 0 -2px 0 rgba(120,90,30,.12) inset, 0 2px 6px -1px rgba(120,90,30,.22), 0 2px 0 rgba(160,120,40,.25)',
+          'card': '0 1px 0 rgba(255,255,255,.8) inset, 0 1px 2px rgba(120,90,30,.10), 0 8px 24px -8px rgba(120,90,30,.28), 0 2px 4px -1px rgba(120,90,30,.12)',
+          'card-deep': '0 1px 0 rgba(255,255,255,.9) inset, 0 12px 32px -10px rgba(100,70,20,.35), 0 4px 8px -2px rgba(100,70,20,.15)',
+          'well': 'inset 0 2px 6px rgba(120,90,30,.22), inset 0 1px 2px rgba(120,90,30,.25), 0 1px 0 rgba(255,255,255,.7)',
+          'sticky': '0 1px 2px rgba(120,90,30,.15), 0 6px 14px -4px rgba(120,90,30,.35)',
+          'knob': '0 1px 0 rgba(255,255,255,.9) inset, 0 -2px 3px rgba(120,90,30,.18) inset, 0 2px 5px rgba(120,90,30,.4)',
+        },
+        backgroundImage: {
+          'yolk-grad': 'linear-gradient(180deg, #FFD968 0%, #F7C948 45%, #EFB838 100%)',
+          'navy-grad': 'linear-gradient(180deg, #2B3D52 0%, #1E2A38 55%, #18222E 100%)',
+          'cream-grad': 'linear-gradient(180deg, #FFFDF6 0%, #FBF3E0 100%)',
+          'shell-grad': 'linear-gradient(180deg, #FDF8EC 0%, #F3E8CE 100%)',
+          'rust-grad': 'linear-gradient(180deg, #B5604E 0%, #A05040 55%, #8F4536 100%)',
+          'sky-grad': 'linear-gradient(180deg, #C2E2EE 0%, #A8D4E2 60%, #95C6D7 100%)',
+          'sage-grad': 'linear-gradient(180deg, #AECB9E 0%, #8FB07E 100%)',
+        },
+      }
+    }
+  }
+</script>
+<style type="text/tailwindcss">
+  body {
+    background-color: #F3E9D2;
+    background-image:
+      radial-gradient(ellipse 80% 60% at 50% -10%, rgba(255,250,235,.9), transparent),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .36 0 0 0 0 .18 0 0 0 .05 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .press:active { transform: translateY(2px); box-shadow: 0 2px 4px rgba(120,80,10,.25) inset, 0 1px 0 rgba(255,255,255,.2) !important; }
+  .press { transition: transform .08s ease, box-shadow .12s ease, filter .12s ease; touch-action: manipulation; -webkit-tap-highlight-color: transparent; -webkit-user-select: none; user-select: none; }
+  @media (hover: hover) { .press:hover { filter: brightness(1.03); } }
+  details > summary { list-style: none; cursor: pointer; }
+  details > summary::-webkit-details-marker { display: none; }
+</style>
+</head>
+<body class="font-sans text-ink antialiased min-h-screen">
+
+<div class="max-w-5xl mx-auto px-6 py-14 space-y-14">
+
+  <!-- ============ HEADER ============ -->
+  <header class="text-center space-y-3">
+    <div class="inline-flex items-center gap-3.5">
+      <img src="assets/thumbs/logomark-skeuo.png" alt="egghead logomark" width="54" height="54" class="drop-shadow-[0_4px_5px_rgba(120,90,30,.25)]" />
+      <h1 class="text-4xl font-black tracking-tight">egghead <span class="text-ink-soft font-bold">/ resource list <span class="font-bold text-ink-soft/60">— every lesson in its place</span></span></h1>
+    </div>
+    <p class="font-hand text-2xl text-rust rotate-[-1deg]">tick a box. feel the click. repeat. ✓</p>
+  </header>
+
+  <div class="grid lg:grid-cols-3 gap-8 items-start">
+
+    <!-- ============ THE LIST, IN CONTEXT ============ -->
+    <section class="lg:col-span-2 space-y-6">
+      <h2 class="text-sm font-extrabold uppercase tracking-[0.2em] text-rust">Course curriculum</h2>
+
+      <div class="bg-cream-grad rounded-2xl shadow-card-deep border border-[#EADFC2] overflow-hidden">
+
+        <!-- card header: course + overall progress -->
+        <div class="px-6 pt-6 pb-5 border-b border-[#EFE4C8] space-y-4">
+          <div class="flex items-center gap-4">
+            <span class="shrink-0 w-12 h-12 grid place-items-center rounded-xl bg-yolk-grad shadow-btn border border-yolk-shadow/40 font-black">CC</span>
+            <div class="min-w-0 flex-1">
+              <p class="text-[10px] font-black uppercase tracking-wider text-rust">Learning path</p>
+              <h3 class="text-xl font-black leading-tight truncate">Claude Code Mastery</h3>
+            </div>
+            <span class="hidden sm:inline-flex items-center gap-1.5 bg-cream-grad text-ink text-xs font-extrabold px-3.5 py-1.5 rounded-full shadow-btn-ghost border border-[#E2D5B4]">
+              <span class="w-2 h-2 rounded-full bg-sage shadow-[0_0_4px_#9DBE8D]"></span> 14 lessons · 2h 19m
+            </span>
+          </div>
+          <div class="space-y-1.5">
+            <div class="flex justify-between text-xs font-extrabold text-ink-soft">
+              <span>5 of 14 complete</span><span>36%</span>
+            </div>
+            <div class="h-4 bg-shell rounded-full shadow-well border border-[#E6D9B8] p-1">
+              <div class="h-full w-[36%] bg-yolk-grad rounded-full shadow-[0_1px_0_rgba(255,255,255,.6)_inset,0_-1px_2px_rgba(0,0,0,.18)_inset] relative overflow-hidden">
+                <div class="absolute inset-x-1.5 top-0.5 h-0.5 bg-white/40 rounded-full"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============ SECTION 1 — completed, collapsed ============ -->
+        <details class="group border-b border-[#EFE4C8]">
+          <summary class="flex items-center gap-3 px-6 py-4 hover:bg-white/40 transition-colors">
+            <span class="shrink-0 w-7 h-7 grid place-items-center rounded-full bg-sage-grad border border-[#7FA06E] text-ink [box-shadow:0_1px_0_rgba(255,255,255,.45)_inset,0_2px_0_#6B8A5B,0_3px_6px_-1px_rgba(90,120,70,.35)]">
+              <svg width="11" height="9" viewBox="0 0 12 10" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1.5 5.5L4.5 8.5L10.5 1.5"/></svg>
+            </span>
+            <span class="font-extrabold min-w-0 truncate">Getting oriented</span>
+            <span class="text-xs font-extrabold text-ink-soft bg-shell px-2.5 py-1 rounded-full shadow-well border border-[#E6D9B8]">3/3</span>
+            <span class="ml-auto text-xs font-bold text-ink-soft shrink-0">22m</span>
+            <svg width="14" height="9" viewBox="0 0 14 9" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 text-ink-soft transition-transform duration-200 group-open:rotate-180"><path d="M1.5 1.5L7 7l5.5-5.5"/></svg>
+          </summary>
+          <ul class="px-3.5 pb-3 space-y-1">
+            <li>
+              <a href="#" class="flex items-center gap-3 px-2.5 py-2 rounded-xl text-ink-soft hover:bg-white/40 transition-colors">
+                <span class="shrink-0 w-7 h-7 grid place-items-center rounded-full bg-sage/30 border border-sage text-[#5C7A4C]">
+                  <svg width="11" height="9" viewBox="0 0 12 10" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1.5 5.5L4.5 8.5L10.5 1.5"/></svg>
+                </span>
+                <span class="font-bold min-w-0 truncate">Install and authenticate Claude Code</span>
+                <span class="ml-auto text-xs font-bold shrink-0">4:12</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="flex items-center gap-3 px-2.5 py-2 rounded-xl text-ink-soft hover:bg-white/40 transition-colors">
+                <span class="shrink-0 w-7 h-7 grid place-items-center rounded-full bg-sage/30 border border-sage text-[#5C7A4C]">
+                  <svg width="11" height="9" viewBox="0 0 12 10" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1.5 5.5L4.5 8.5L10.5 1.5"/></svg>
+                </span>
+                <span class="font-bold min-w-0 truncate">Navigate a codebase with natural language</span>
+                <span class="ml-auto text-xs font-bold shrink-0">7:30</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="flex items-center gap-3 px-2.5 py-2 rounded-xl text-ink-soft hover:bg-white/40 transition-colors">
+                <span class="shrink-0 w-7 h-7 grid place-items-center rounded-full bg-sage/30 border border-sage text-[#5C7A4C]">
+                  <svg width="11" height="9" viewBox="0 0 12 10" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1.5 5.5L4.5 8.5L10.5 1.5"/></svg>
+                </span>
+                <span class="font-bold min-w-0 truncate">Your first end-to-end fix</span>
+                <span class="ml-auto text-xs font-bold shrink-0">10:08</span>
+              </a>
+            </li>
+          </ul>
+        </details>
+
+        <!-- ============ SECTION 2 — in progress, open ============ -->
+        <details class="group border-b border-[#EFE4C8]" open>
+          <summary class="flex items-center gap-3 px-6 py-4 hover:bg-white/40 transition-colors">
+            <span class="shrink-0 w-7 h-7 grid place-items-center rounded-full bg-yolk-grad shadow-btn border border-yolk-shadow/40 text-[11px] font-black">2</span>
+            <span class="font-extrabold min-w-0 truncate">Hooks in practice</span>
+            <span class="text-xs font-extrabold text-ink-soft bg-shell px-2.5 py-1 rounded-full shadow-well border border-[#E6D9B8]">2/5</span>
+            <span class="ml-auto text-xs font-bold text-ink-soft shrink-0">48m</span>
+            <svg width="14" height="9" viewBox="0 0 14 9" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 text-ink-soft transition-transform duration-200 group-open:rotate-180"><path d="M1.5 1.5L7 7l5.5-5.5"/></svg>
+          </summary>
+          <ul class="px-3.5 pb-3 space-y-1">
+            <li>
+              <a href="#" class="flex items-center gap-3 px-2.5 py-2 rounded-xl text-ink-soft hover:bg-white/40 transition-colors">
+                <span class="shrink-0 w-7 h-7 grid place-items-center rounded-full bg-sage/30 border border-sage text-[#5C7A4C]">
+                  <svg width="11" height="9" viewBox="0 0 12 10" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1.5 5.5L4.5 8.5L10.5 1.5"/></svg>
+                </span>
+                <span class="font-bold min-w-0 truncate">Anatomy of a hook</span>
+                <span class="ml-auto text-xs font-bold shrink-0">6:40</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="flex items-center gap-3 px-2.5 py-2 rounded-xl text-ink-soft hover:bg-white/40 transition-colors">
+                <span class="shrink-0 w-7 h-7 grid place-items-center rounded-full bg-sage/30 border border-sage text-[#5C7A4C]">
+                  <svg width="11" height="9" viewBox="0 0 12 10" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1.5 5.5L4.5 8.5L10.5 1.5"/></svg>
+                </span>
+                <span class="font-bold min-w-0 truncate">Block dangerous commands with PreToolUse</span>
+                <span class="ml-auto text-xs font-bold shrink-0">9:12</span>
+              </a>
+            </li>
+
+            <!-- ACTIVE lesson: raised yolk key -->
+            <li>
+              <a href="#" aria-current="page" class="press flex items-center gap-3 px-2.5 py-2.5 rounded-xl bg-yolk-grad shadow-btn hover:shadow-btn-hover border border-yolk-shadow/40">
+                <span class="shrink-0 w-7 h-7 grid place-items-center rounded-full bg-cream-grad shadow-knob border border-[#E2D5B4]">
+                  <svg width="9" height="10" viewBox="0 0 13 14" fill="#1E2A38" class="translate-x-px"><path d="M1 1.8c0-.8.9-1.3 1.6-.9l9 5.2c.7.4.7 1.4 0 1.8l-9 5.2c-.7.4-1.6-.1-1.6-.9V1.8z"/></svg>
+                </span>
+                <span class="font-extrabold min-w-0 truncate">Use hooks to enforce code quality</span>
+                <span class="text-[10px] font-black uppercase tracking-wider bg-ink/10 px-2 py-0.5 rounded-full shrink-0">Now playing</span>
+                <span class="ml-auto text-xs font-extrabold shrink-0">12:34</span>
+              </a>
+              <!-- chapters: stitched sub-rail -->
+              <ul class="ml-[2.05rem] mt-1.5 mb-1 pl-4 border-l-2 border-dashed border-[#DCCDA4] space-y-0.5">
+                <li>
+                  <a href="#" class="flex items-center gap-2.5 px-2 py-1.5 rounded-lg text-sm text-ink-soft hover:bg-white/40 transition-colors">
+                    <span class="shrink-0 w-2 h-2 rounded-full bg-sage shadow-[0_0_3px_#9DBE8D]"></span>
+                    <span class="font-bold min-w-0 truncate line-through decoration-2 decoration-ink-soft/30">Project setup</span>
+                    <span class="ml-auto text-[11px] font-bold shrink-0">0:00</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#" class="flex items-center gap-2.5 px-2 py-1.5 rounded-lg text-sm text-ink-soft hover:bg-white/40 transition-colors">
+                    <span class="shrink-0 w-2 h-2 rounded-full bg-sage shadow-[0_0_3px_#9DBE8D]"></span>
+                    <span class="font-bold min-w-0 truncate line-through decoration-2 decoration-ink-soft/30">Write the PostToolUse hook</span>
+                    <span class="ml-auto text-[11px] font-bold shrink-0">3:18</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#" aria-current="true" class="flex items-center gap-2.5 px-2 py-1.5 rounded-lg text-sm bg-yolk/25 border border-yolk-shadow/25">
+                    <span class="shrink-0 w-2 h-2 rounded-full bg-cream-grad ring-2 ring-yolk-deep"></span>
+                    <span class="font-extrabold min-w-0 truncate">Wire up the linter</span>
+                    <span class="ml-auto text-[11px] font-extrabold shrink-0">7:18</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#" class="flex items-center gap-2.5 px-2 py-1.5 rounded-lg text-sm text-ink-soft hover:bg-white/40 transition-colors">
+                    <span class="shrink-0 w-2 h-2 rounded-full bg-shell shadow-well border border-[#D8C9A6]"></span>
+                    <span class="font-bold min-w-0 truncate">Test the full loop</span>
+                    <span class="ml-auto text-[11px] font-bold shrink-0">10:02</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+
+            <li>
+              <a href="#" class="flex items-center gap-3 px-2.5 py-2 rounded-xl hover:bg-white/40 transition-colors">
+                <span class="shrink-0 w-7 h-7 grid place-items-center rounded-full bg-shell shadow-well border border-[#E6D9B8] text-[11px] font-black text-ink-soft">7</span>
+                <span class="font-bold min-w-0 truncate">Notify yourself when Claude needs you</span>
+                <span class="ml-auto text-xs font-bold text-ink-soft shrink-0">8:55</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="flex items-center gap-3 px-2.5 py-2 rounded-xl hover:bg-white/40 transition-colors">
+                <span class="shrink-0 w-7 h-7 grid place-items-center rounded-full bg-shell shadow-well border border-[#E6D9B8] text-[11px] font-black text-ink-soft">8</span>
+                <span class="font-bold min-w-0 truncate">Ship a team hooks config</span>
+                <span class="ml-auto text-xs font-bold text-ink-soft shrink-0">11:04</span>
+              </a>
+            </li>
+          </ul>
+        </details>
+
+        <!-- ============ SECTION 3 — pro, locked ============ -->
+        <details class="group" open>
+          <summary class="flex items-center gap-3 px-6 py-4 hover:bg-white/40 transition-colors">
+            <span class="shrink-0 w-7 h-7 grid place-items-center rounded-full bg-shell shadow-well border border-[#E6D9B8] text-[11px] font-black text-ink-soft">3</span>
+            <span class="font-extrabold min-w-0 truncate">Shipping agents</span>
+            <span class="text-[10px] font-black uppercase tracking-wider bg-rust-grad text-cream px-2.5 py-1 rounded-full border border-[#7E3C2E] [box-shadow:0_1px_0_rgba(255,255,255,.25)_inset,0_-2px_0_rgba(0,0,0,.2)_inset,0_2px_4px_rgba(110,50,30,.35)]">Pro</span>
+            <span class="ml-auto text-xs font-bold text-ink-soft shrink-0">1h 9m</span>
+            <svg width="14" height="9" viewBox="0 0 14 9" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 text-ink-soft transition-transform duration-200 group-open:rotate-180"><path d="M1.5 1.5L7 7l5.5-5.5"/></svg>
+          </summary>
+          <ul class="px-3.5 pb-4 space-y-1">
+            <li>
+              <a href="#" class="flex items-center gap-3 px-2.5 py-2 rounded-xl hover:bg-white/40 transition-colors">
+                <span class="shrink-0 w-7 h-7 grid place-items-center rounded-full bg-shell shadow-well border border-[#E6D9B8] text-[11px] font-black text-ink-soft">9</span>
+                <span class="font-bold min-w-0 truncate">Design a subagent team</span>
+                <span class="text-[10px] font-black uppercase tracking-wider bg-sky-grad text-ink px-2.5 py-1 rounded-full border border-[#86B8C9] [box-shadow:0_1px_0_rgba(255,255,255,.5)_inset,0_-2px_0_rgba(0,0,0,.1)_inset,0_2px_4px_rgba(80,130,150,.3)] shrink-0">Free preview</span>
+                <span class="ml-auto text-xs font-bold text-ink-soft shrink-0">9:40</span>
+              </a>
+            </li>
+            <li aria-disabled="true">
+              <div class="flex items-center gap-3 px-2.5 py-2 rounded-xl opacity-55">
+                <span class="shrink-0 w-7 h-7 grid place-items-center rounded-full bg-shell shadow-well border border-[#E6D9B8] text-ink-soft">
+                  <svg width="11" height="13" viewBox="0 0 12 14" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="6" width="10" height="7" rx="1.5"/><path d="M3.5 6V4a2.5 2.5 0 015 0v2"/></svg>
+                </span>
+                <span class="font-bold min-w-0 truncate text-ink-soft">Parallel workflows with git worktrees</span>
+                <span class="ml-auto text-xs font-bold text-ink-soft shrink-0">14:21</span>
+              </div>
+            </li>
+            <li aria-disabled="true">
+              <div class="flex items-center gap-3 px-2.5 py-2 rounded-xl opacity-55">
+                <span class="shrink-0 w-7 h-7 grid place-items-center rounded-full bg-shell shadow-well border border-[#E6D9B8] text-ink-soft">
+                  <svg width="11" height="13" viewBox="0 0 12 14" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="6" width="10" height="7" rx="1.5"/><path d="M3.5 6V4a2.5 2.5 0 015 0v2"/></svg>
+                </span>
+                <span class="font-bold min-w-0 truncate text-ink-soft">MCP servers as agent tools</span>
+                <span class="ml-auto text-xs font-bold text-ink-soft shrink-0">16:05</span>
+              </div>
+            </li>
+            <li aria-disabled="true">
+              <div class="flex items-center gap-3 px-2.5 py-2 rounded-xl opacity-55">
+                <span class="shrink-0 w-7 h-7 grid place-items-center rounded-full bg-shell shadow-well border border-[#E6D9B8] text-ink-soft">
+                  <svg width="11" height="13" viewBox="0 0 12 14" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="6" width="10" height="7" rx="1.5"/><path d="M3.5 6V4a2.5 2.5 0 015 0v2"/></svg>
+                </span>
+                <span class="font-bold min-w-0 truncate text-ink-soft">Evaluate and harden your agents</span>
+                <span class="ml-auto text-xs font-bold text-ink-soft shrink-0">18:42</span>
+              </div>
+            </li>
+            <!-- unlock row -->
+            <li class="pt-2 px-2.5">
+              <div class="flex flex-wrap items-center gap-4 bg-shell rounded-xl px-4 py-3.5 shadow-well border border-[#E6D9B8]">
+                <p class="font-bold text-sm text-ink-soft min-w-0 flex-1">5 more lessons behind the little padlock.</p>
+                <button class="press shrink-0 bg-yolk-grad text-ink font-extrabold text-sm px-5 pt-[11px] pb-[9px] rounded-full shadow-btn hover:shadow-btn-hover border border-yolk-shadow/40">Unlock with Pro</button>
+              </div>
+            </li>
+          </ul>
+        </details>
+      </div>
+
+      <p class="font-hand text-2xl text-ink-soft rotate-[-0.5deg] pl-2">the active lesson is a real button — it sits proud of the page. press it. ↑</p>
+    </section>
+
+    <!-- ============ ANATOMY SIDEBAR ============ -->
+    <aside class="space-y-6">
+      <h2 class="text-sm font-extrabold uppercase tracking-[0.2em] text-rust">Anatomy</h2>
+
+      <!-- item states -->
+      <div class="bg-cream-grad rounded-2xl shadow-card border border-[#EADFC2] p-5 space-y-3">
+        <span class="text-xs font-extrabold uppercase tracking-wider text-ink-soft block px-1">Item states</span>
+
+        <div class="flex items-center gap-3 px-2.5 py-2 rounded-xl text-ink-soft">
+          <span class="shrink-0 w-7 h-7 grid place-items-center rounded-full bg-sage/30 border border-sage text-[#5C7A4C]">
+            <svg width="11" height="9" viewBox="0 0 12 10" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1.5 5.5L4.5 8.5L10.5 1.5"/></svg>
+          </span>
+          <span class="font-bold">Completed</span>
+          <span class="ml-auto font-hand text-lg text-[#5C7A4C] rotate-[-2deg]">done ✓</span>
+        </div>
+
+        <div class="press flex items-center gap-3 px-2.5 py-2.5 rounded-xl bg-yolk-grad shadow-btn border border-yolk-shadow/40">
+          <span class="shrink-0 w-7 h-7 grid place-items-center rounded-full bg-cream-grad shadow-knob border border-[#E2D5B4]">
+            <svg width="9" height="10" viewBox="0 0 13 14" fill="#1E2A38" class="translate-x-px"><path d="M1 1.8c0-.8.9-1.3 1.6-.9l9 5.2c.7.4.7 1.4 0 1.8l-9 5.2c-.7.4-1.6-.1-1.6-.9V1.8z"/></svg>
+          </span>
+          <span class="font-extrabold">Active</span>
+          <span class="ml-auto font-hand text-lg text-ink/70 rotate-[-2deg]">you are here</span>
+        </div>
+
+        <div class="flex items-center gap-3 px-2.5 py-2 rounded-xl hover:bg-white/40 transition-colors">
+          <span class="shrink-0 w-7 h-7 grid place-items-center rounded-full bg-shell shadow-well border border-[#E6D9B8] text-[11px] font-black text-ink-soft">4</span>
+          <span class="font-bold">Upcoming</span>
+          <span class="ml-auto font-hand text-lg text-ink-soft rotate-[-2deg]">soon…</span>
+        </div>
+
+        <div class="flex items-center gap-3 px-2.5 py-2 rounded-xl opacity-55">
+          <span class="shrink-0 w-7 h-7 grid place-items-center rounded-full bg-shell shadow-well border border-[#E6D9B8] text-ink-soft">
+            <svg width="11" height="13" viewBox="0 0 12 14" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="6" width="10" height="7" rx="1.5"/><path d="M3.5 6V4a2.5 2.5 0 015 0v2"/></svg>
+          </span>
+          <span class="font-bold text-ink-soft">Locked</span>
+          <span class="ml-auto font-hand text-lg text-ink-soft rotate-[-2deg]">pro only</span>
+        </div>
+      </div>
+
+      <!-- indicator variants -->
+      <div class="bg-cream-grad rounded-2xl shadow-card border border-[#EADFC2] p-5 space-y-4">
+        <span class="text-xs font-extrabold uppercase tracking-wider text-ink-soft block px-1">Indicator variants</span>
+
+        <div class="flex items-center gap-3 px-1">
+          <span class="w-2 h-2 rounded-full bg-sage shadow-[0_0_3px_#9DBE8D]"></span>
+          <span class="w-2 h-2 rounded-full bg-cream-grad ring-2 ring-yolk-deep"></span>
+          <span class="w-2 h-2 rounded-full bg-shell shadow-well border border-[#D8C9A6]"></span>
+          <span class="text-sm font-bold text-ink-soft ml-2">dots — for chapters &amp; sub-items</span>
+        </div>
+
+        <div class="flex items-center gap-2 px-1">
+          <span class="w-7 h-7 grid place-items-center rounded-full bg-sage-grad border border-[#7FA06E] text-ink [box-shadow:0_1px_0_rgba(255,255,255,.45)_inset,0_2px_0_#6B8A5B,0_3px_6px_-1px_rgba(90,120,70,.35)]">
+            <svg width="11" height="9" viewBox="0 0 12 10" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1.5 5.5L4.5 8.5L10.5 1.5"/></svg>
+          </span>
+          <span class="w-7 h-7 grid place-items-center rounded-full bg-yolk-grad shadow-btn border border-yolk-shadow/40 text-[11px] font-black">2</span>
+          <span class="w-7 h-7 grid place-items-center rounded-full bg-shell shadow-well border border-[#E6D9B8] text-[11px] font-black text-ink-soft">3</span>
+          <span class="text-sm font-bold text-ink-soft ml-2">numbers — for lessons</span>
+        </div>
+
+        <div class="flex items-center gap-2 px-1">
+          <span class="w-7 h-7 grid place-items-center rounded-full bg-sage/30 border border-sage text-[#5C7A4C]">
+            <svg width="11" height="9" viewBox="0 0 12 10" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1.5 5.5L4.5 8.5L10.5 1.5"/></svg>
+          </span>
+          <span class="w-7 h-7 grid place-items-center rounded-full bg-shell shadow-well border border-[#E6D9B8] text-ink-soft">
+            <svg width="11" height="13" viewBox="0 0 12 14" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="6" width="10" height="7" rx="1.5"/><path d="M3.5 6V4a2.5 2.5 0 015 0v2"/></svg>
+          </span>
+          <span class="text-sm font-bold text-ink-soft ml-2">checks &amp; locks — quiet status</span>
+        </div>
+      </div>
+
+      <!-- sticky note -->
+      <div class="relative w-56 bg-gradient-to-b from-[#FBEFA9] to-[#F3DF7E] p-5 pt-7 shadow-sticky rotate-[-2deg] rounded-[2px] mx-auto">
+        <span class="absolute -top-2.5 left-1/2 -translate-x-1/2 w-16 h-5 bg-[#E8D9A8]/80 rotate-[2deg] shadow-sm"></span>
+        <p class="font-hand text-2xl leading-tight text-ink">one lesson at a time.<br/>the list keeps score<br/>so you don't have to. ✓</p>
+      </div>
+    </aside>
+  </div>
+
+  <!-- sign-off -->
+  <footer class="text-center pb-4">
+    <p class="font-hand text-2xl text-ink-soft">progress, not perfection. 🥚</p>
+  </footer>
+
+</div>
+</body>
+</html>

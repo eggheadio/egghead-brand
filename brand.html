@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>egghead — the whole workbench · brand hub</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400..1000&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          paper:   '#FBF3E0',
+          cream:   '#FDF8EC',
+          shell:   '#F6EDD8',
+          yolk:    '#F7C948',
+          'yolk-deep': '#E8B229',
+          'yolk-shadow': '#C28E12',
+          ink:     '#1E2A38',
+          'ink-soft': '#43536A',
+          rust:    '#A05040',
+          sky:     '#A8D4E2',
+          sage:    '#9DBE8D',
+          navy:    '#16222F',
+        },
+        fontFamily: {
+          sans: ['Nunito', 'system-ui', 'sans-serif'],
+          hand: ['Caveat', 'cursive'],
+        },
+        boxShadow: {
+          'btn': '0 1px 0 rgba(255,255,255,.65) inset, 0 3px 0 #C28E12, 0 6px 10px -2px rgba(120,80,10,.35)',
+          'btn-hover': '0 1px 0 rgba(255,255,255,.7) inset, 0 3px 0 #C28E12, 0 9px 16px -3px rgba(120,80,10,.40)',
+          'btn-dark': '0 1px 0 rgba(255,255,255,.14) inset, 0 3px 0 #0A1119, 0 6px 12px -2px rgba(10,20,30,.5)',
+          'btn-ghost': '0 1px 0 rgba(255,255,255,.8) inset, 0 -2px 0 rgba(120,90,30,.12) inset, 0 2px 6px -1px rgba(120,90,30,.22), 0 2px 0 rgba(160,120,40,.25)',
+          'card': '0 1px 0 rgba(255,255,255,.8) inset, 0 1px 2px rgba(120,90,30,.10), 0 8px 24px -8px rgba(120,90,30,.28), 0 2px 4px -1px rgba(120,90,30,.12)',
+          'card-deep': '0 1px 0 rgba(255,255,255,.9) inset, 0 12px 32px -10px rgba(100,70,20,.35), 0 4px 8px -2px rgba(100,70,20,.15)',
+          'well': 'inset 0 2px 6px rgba(120,90,30,.22), inset 0 1px 2px rgba(120,90,30,.25), 0 1px 0 rgba(255,255,255,.7)',
+          'sticky': '0 1px 2px rgba(120,90,30,.15), 0 6px 14px -4px rgba(120,90,30,.35)',
+          'knob': '0 1px 0 rgba(255,255,255,.9) inset, 0 -2px 3px rgba(120,90,30,.18) inset, 0 2px 5px rgba(120,90,30,.4)',
+        },
+        backgroundImage: {
+          'yolk-grad': 'linear-gradient(180deg, #FFD968 0%, #F7C948 45%, #EFB838 100%)',
+          'navy-grad': 'linear-gradient(180deg, #2B3D52 0%, #1E2A38 55%, #18222E 100%)',
+          'cream-grad': 'linear-gradient(180deg, #FFFDF6 0%, #FBF3E0 100%)',
+          'shell-grad': 'linear-gradient(180deg, #FDF8EC 0%, #F3E8CE 100%)',
+          'rust-grad': 'linear-gradient(180deg, #B5604E 0%, #A05040 55%, #8F4536 100%)',
+          'sky-grad': 'linear-gradient(180deg, #C2E2EE 0%, #A8D4E2 60%, #95C6D7 100%)',
+        },
+      }
+    }
+  }
+</script>
+<style type="text/tailwindcss">
+  html { scroll-behavior: smooth; }
+  body {
+    background-color: #F3E9D2;
+    background-image:
+      radial-gradient(ellipse 80% 60% at 50% -10%, rgba(255,250,235,.9), transparent),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .36 0 0 0 0 .18 0 0 0 .05 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .press:active { transform: translateY(2px); box-shadow: 0 2px 4px rgba(120,80,10,.25) inset, 0 1px 0 rgba(255,255,255,.2) !important; }
+  .press { transition: transform .08s ease, box-shadow .12s ease, filter .12s ease; touch-action: manipulation; -webkit-tap-highlight-color: transparent; -webkit-user-select: none; user-select: none; }
+  @media (hover: hover) { .press:hover { filter: brightness(1.03); } }
+</style>
+</head>
+<body class="font-sans text-ink antialiased min-h-screen">
+
+<div class="max-w-6xl mx-auto px-6 py-14 space-y-16">
+
+  <!-- ============ HEADER ============ -->
+  <header class="text-center space-y-4">
+    <div class="inline-flex items-center gap-3.5">
+      <img src="assets/thumbs/logomark-skeuo.png" alt="egghead logomark" width="54" height="54" class="drop-shadow-[0_4px_5px_rgba(120,90,30,.25)]" />
+      <h1 class="text-4xl font-black tracking-tight">egghead <span class="text-ink-soft font-bold">/ the whole workbench <span class="font-bold text-ink-soft/60">— brand hub</span></span></h1>
+    </div>
+    <p class="font-hand text-2xl text-rust rotate-[-1deg]">everything we built, on one bench — day shift on the left, night shift on the right. 🛠️</p>
+
+    <!-- section pills -->
+    <nav class="inline-flex flex-wrap justify-center gap-2 pt-2" aria-label="Sections">
+      <a href="#foundations" class="press bg-yolk-grad text-ink font-extrabold text-sm px-4 pt-[9px] pb-[7px] rounded-full shadow-btn border border-yolk-shadow/40">Foundations</a>
+      <a href="#components" class="press bg-cream-grad text-ink font-bold text-sm px-4 py-2 rounded-full shadow-btn-ghost border border-[#E2D5B4]">Components</a>
+      <a href="#navigation" class="press bg-cream-grad text-ink font-bold text-sm px-4 py-2 rounded-full shadow-btn-ghost border border-[#E2D5B4]">Navigation</a>
+      <a href="#footer" class="press bg-cream-grad text-ink font-bold text-sm px-4 py-2 rounded-full shadow-btn-ghost border border-[#E2D5B4]">Footer</a>
+      <a href="#resource-list" class="press bg-cream-grad text-ink font-bold text-sm px-4 py-2 rounded-full shadow-btn-ghost border border-[#E2D5B4]">Resource list</a>
+      <a href="#article" class="press bg-cream-grad text-ink font-bold text-sm px-4 py-2 rounded-full shadow-btn-ghost border border-[#E2D5B4]">Article</a>
+      <a href="#layout" class="press bg-cream-grad text-ink font-bold text-sm px-4 py-2 rounded-full shadow-btn-ghost border border-[#E2D5B4]">Full layout</a>
+    </nav>
+  </header>
+
+  <!-- ============ FOUNDATIONS ============ -->
+  <section id="foundations" class="space-y-6 scroll-mt-8">
+    <h2 class="text-sm font-extrabold uppercase tracking-[0.2em] text-rust">00 · Foundations</h2>
+
+    <div class="grid lg:grid-cols-[1.6fr_1fr] gap-6 items-start">
+
+      <div class="space-y-6">
+        <!-- day palette -->
+        <div class="bg-cream-grad rounded-2xl shadow-card border border-[#EADFC2] p-6 space-y-4">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-extrabold uppercase tracking-wider text-ink-soft">Palette · day shift</span>
+            <span class="inline-flex items-center gap-1.5 bg-cream-grad text-[11px] font-extrabold px-3 py-1 rounded-full shadow-btn-ghost border border-[#E2D5B4] text-ink-soft">☀️ paper &amp; yolk</span>
+          </div>
+          <div class="grid grid-cols-4 sm:grid-cols-8 gap-3">
+            <div class="space-y-1.5"><div class="h-14 rounded-xl bg-[#FBF3E0] border border-[#E2D5B4] shadow-[0_1px_0_rgba(255,255,255,.8)_inset,0_2px_4px_rgba(120,90,30,.15)]"></div><p class="text-[10px] font-extrabold leading-tight">paper<br/><span class="text-ink-soft font-bold">#FBF3E0</span></p></div>
+            <div class="space-y-1.5"><div class="h-14 rounded-xl bg-[#F6EDD8] border border-[#E2D5B4] shadow-well"></div><p class="text-[10px] font-extrabold leading-tight">shell<br/><span class="text-ink-soft font-bold">#F6EDD8</span></p></div>
+            <div class="space-y-1.5"><div class="h-14 rounded-xl bg-yolk-grad border border-yolk-shadow/40 shadow-btn"></div><p class="text-[10px] font-extrabold leading-tight">yolk<br/><span class="text-ink-soft font-bold">#F7C948</span></p></div>
+            <div class="space-y-1.5"><div class="h-14 rounded-xl bg-[#1E2A38] border border-black/40 shadow-btn-dark"></div><p class="text-[10px] font-extrabold leading-tight">ink<br/><span class="text-ink-soft font-bold">#1E2A38</span></p></div>
+            <div class="space-y-1.5"><div class="h-14 rounded-xl bg-rust-grad border border-[#7E3C2E] shadow-[0_1px_0_rgba(255,255,255,.25)_inset,0_3px_0_#7E3C2E,0_5px_8px_-2px_rgba(110,50,30,.4)]"></div><p class="text-[10px] font-extrabold leading-tight">rust<br/><span class="text-ink-soft font-bold">#A05040</span></p></div>
+            <div class="space-y-1.5"><div class="h-14 rounded-xl bg-sky-grad border border-[#86B8C9] shadow-[0_1px_0_rgba(255,255,255,.5)_inset,0_3px_0_#86B8C9,0_5px_8px_-2px_rgba(80,130,150,.35)]"></div><p class="text-[10px] font-extrabold leading-tight">sky<br/><span class="text-ink-soft font-bold">#A8D4E2</span></p></div>
+            <div class="space-y-1.5"><div class="h-14 rounded-xl bg-gradient-to-b from-[#AECB9E] to-[#8FB07E] border border-[#7FA06E] shadow-[0_1px_0_rgba(255,255,255,.5)_inset,0_3px_0_#7FA06E,0_5px_8px_-2px_rgba(90,120,70,.35)]"></div><p class="text-[10px] font-extrabold leading-tight">sage<br/><span class="text-ink-soft font-bold">#9DBE8D</span></p></div>
+            <div class="space-y-1.5"><div class="h-14 rounded-xl bg-navy-grad border border-black/40 shadow-btn-dark"></div><p class="text-[10px] font-extrabold leading-tight">navy<br/><span class="text-ink-soft font-bold">#16222F</span></p></div>
+          </div>
+          <p class="font-hand text-lg text-ink-soft rotate-[-0.5deg]">navy + cream do the heavy lifting; yolk is the light source; everything else is seasoning.</p>
+        </div>
+
+        <!-- night palette -->
+        <div class="bg-[#0A101A] rounded-2xl shadow-btn-dark border border-black/50 p-6 space-y-4 text-[#EDE4D3]">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-extrabold uppercase tracking-wider text-[#9AABC0]">Palette · night shift</span>
+            <span class="inline-flex items-center gap-1.5 bg-[#1E2C3E] text-[11px] font-extrabold px-3 py-1 rounded-full border border-[#36485F] text-[#9AABC0]">🌙 same names, inverted roles</span>
+          </div>
+          <div class="grid grid-cols-4 sm:grid-cols-8 gap-3">
+            <div class="space-y-1.5"><div class="h-14 rounded-xl bg-[#0D141F] border border-[#2A3A4F]"></div><p class="text-[10px] font-extrabold leading-tight">paper<br/><span class="text-[#9AABC0] font-bold">#0D141F</span></p></div>
+            <div class="space-y-1.5"><div class="h-14 rounded-xl bg-[#101926] border border-[#2E3F54] shadow-[inset_0_2px_6px_rgba(0,0,0,.55)]"></div><p class="text-[10px] font-extrabold leading-tight">shell<br/><span class="text-[#9AABC0] font-bold">#101926</span></p></div>
+            <div class="space-y-1.5"><div class="h-14 rounded-xl bg-yolk-grad border border-yolk-shadow/40 shadow-[0_1px_0_rgba(255,255,255,.55)_inset,0_3px_0_#B8860F,0_6px_10px_-2px_rgba(0,0,0,.55)]"></div><p class="text-[10px] font-extrabold leading-tight">yolk<br/><span class="text-[#9AABC0] font-bold">#F7C948</span></p></div>
+            <div class="space-y-1.5"><div class="h-14 rounded-xl bg-[#EDE4D3] border border-white/20"></div><p class="text-[10px] font-extrabold leading-tight">ink<br/><span class="text-[#9AABC0] font-bold">#EDE4D3</span></p></div>
+            <div class="space-y-1.5"><div class="h-14 rounded-xl bg-[#C2664E] border border-[#7E3C2E]"></div><p class="text-[10px] font-extrabold leading-tight">rust<br/><span class="text-[#9AABC0] font-bold">#C2664E</span></p></div>
+            <div class="space-y-1.5"><div class="h-14 rounded-xl bg-[#9AABC0] border border-white/20"></div><p class="text-[10px] font-extrabold leading-tight">ink-soft<br/><span class="text-[#9AABC0] font-bold">#9AABC0</span></p></div>
+            <div class="space-y-1.5"><div class="h-14 rounded-xl bg-gradient-to-b from-[#28394E] to-[#1E2C3E] border border-[#36485F]"></div><p class="text-[10px] font-extrabold leading-tight">card<br/><span class="text-[#9AABC0] font-bold">#28394E</span></p></div>
+            <div class="space-y-1.5"><div class="h-14 rounded-xl bg-gradient-to-b from-[#344660] to-[#1C2839] border border-black/40"></div><p class="text-[10px] font-extrabold leading-tight">navy<br/><span class="text-[#9AABC0] font-bold">#243246</span></p></div>
+          </div>
+          <p class="font-hand text-lg text-[#9AABC0] rotate-[-0.5deg]">at night the yolk glows harder — shadows go black, paper stays paper.</p>
+        </div>
+
+        <!-- type -->
+        <div class="bg-cream-grad rounded-2xl shadow-card border border-[#EADFC2] p-6 grid sm:grid-cols-2 gap-6 items-center">
+          <div>
+            <span class="text-xs font-extrabold uppercase tracking-wider text-ink-soft block mb-2">Type · everything</span>
+            <p class="text-3xl font-black leading-tight">Nunito</p>
+            <p class="font-semibold text-ink-soft text-sm mt-1">Round, friendly, readable at 2× speed. Real weights from <span class="font-normal">regular</span> to <span class="font-black">black</span> — no faux bold.</p>
+          </div>
+          <div>
+            <span class="text-xs font-extrabold uppercase tracking-wider text-ink-soft block mb-2">Type · eggo's handwriting</span>
+            <p class="font-hand text-4xl text-rust rotate-[-1deg]">Caveat — for margin notes ✏️</p>
+            <p class="font-semibold text-ink-soft text-sm mt-1">Annotations, asides, warmth. Never for UI controls.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- the rules index card -->
+      <div class="relative bg-gradient-to-b from-[#FCF6DF] to-[#F5E9C4] rounded-lg shadow-card-deep border border-[#E8D9A8] p-6 rotate-[1deg]">
+        <span class="absolute -top-3 left-6 bg-cream-grad text-[10px] font-black uppercase tracking-[0.15em] px-3 py-1.5 rounded-md shadow-btn-ghost border border-[#E2D5B4]">House rules</span>
+        <span class="absolute top-3 right-3 w-8 h-8 bg-sky-grad rounded-sm shadow-sm [clip-path:polygon(0_0,100%_0,100%_100%)]"></span>
+        <ul class="space-y-3 text-sm font-bold mt-2">
+          <li class="flex items-start gap-2.5"><span class="shrink-0 w-5 h-5 rounded-full bg-sage/30 border border-sage grid place-items-center text-[10px] text-[#5C7A4C] mt-0.5">✓</span> one yolk button per shelf — the CTA earns it</li>
+          <li class="flex items-start gap-2.5"><span class="shrink-0 w-5 h-5 rounded-full bg-sage/30 border border-sage grid place-items-center text-[10px] text-[#5C7A4C] mt-0.5">✓</span> active sits <em>raised</em>; open presses <em>in</em> — consistent physics</li>
+          <li class="flex items-start gap-2.5"><span class="shrink-0 w-5 h-5 rounded-full bg-sage/30 border border-sage grid place-items-center text-[10px] text-[#5C7A4C] mt-0.5">✓</span> inputs are wells — you drop things in</li>
+          <li class="flex items-start gap-2.5"><span class="shrink-0 w-5 h-5 rounded-full bg-sage/30 border border-sage grid place-items-center text-[10px] text-[#5C7A4C] mt-0.5">✓</span> paper stays paper, even at night — stickies, tape, index cards keep daylight colors</li>
+          <li class="flex items-start gap-2.5"><span class="shrink-0 w-5 h-5 rounded-full bg-sage/30 border border-sage grid place-items-center text-[10px] text-[#5C7A4C] mt-0.5">✓</span> alternate card shelves with loose marginalia — never a wall of boxes</li>
+          <li class="flex items-start gap-2.5"><span class="shrink-0 w-5 h-5 rounded-full bg-sage/30 border border-sage grid place-items-center text-[10px] text-[#5C7A4C] mt-0.5">✓</span> drawn, not rendered — hand-crafted warmth over gradient slop</li>
+          <li class="flex items-start gap-2.5"><span class="shrink-0 w-5 h-5 rounded-full bg-sage/30 border border-sage grid place-items-center text-[10px] text-[#5C7A4C] mt-0.5">✓</span> the egg does not crack 🥚</li>
+        </ul>
+        <p class="font-hand text-xl text-ink-soft mt-4 rotate-[-1deg]">sources: SOUL.md + EGGO.md</p>
+        <span class="absolute bottom-0 right-0 w-7 h-7 bg-gradient-to-tl from-[#E2D3A4] to-[#F5E9C4] rounded-tl-xl shadow-[-2px_-2px_4px_rgba(120,90,30,.15)] [clip-path:polygon(100%_0,100%_100%,0_100%)]"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 01 · COMPONENTS ============ -->
+  <section id="components" class="space-y-5 scroll-mt-8">
+    <div class="flex flex-wrap items-end justify-between gap-3">
+      <h2 class="text-sm font-extrabold uppercase tracking-[0.2em] text-rust">01 · Components — ooh, buttons!</h2>
+      <span class="font-hand text-xl text-ink-soft rotate-[-1deg]">the tactile UI kit — every preview below is the live file, scroll inside it ↓</span>
+    </div>
+
+    <div class="grid lg:grid-cols-2 gap-6">
+      <!-- day -->
+      <div class="bg-cream-grad rounded-2xl shadow-card border border-[#EADFC2] overflow-hidden">
+        <div class="flex items-center gap-2 px-4 py-2.5 border-b border-[#EFE4C8]">
+          <span class="w-3 h-3 rounded-full bg-rust shadow-[0_1px_0_rgba(255,255,255,.25)_inset]"></span>
+          <span class="w-3 h-3 rounded-full bg-yolk shadow-[0_1px_0_rgba(255,255,255,.4)_inset]"></span>
+          <span class="w-3 h-3 rounded-full bg-sage shadow-[0_1px_0_rgba(255,255,255,.3)_inset]"></span>
+          <span class="ml-2 text-xs font-bold text-ink-soft">components.html</span>
+          <span class="ml-auto inline-flex items-center gap-1 text-[10px] font-black uppercase tracking-wider bg-yolk-grad px-2.5 py-1 rounded-full shadow-btn border border-yolk-shadow/40">☀️ day</span>
+          <a href="components.html" target="_blank" class="press text-xs font-extrabold text-ink-soft bg-cream-grad px-3 py-1.5 rounded-lg shadow-btn-ghost border border-[#E2D5B4]">open ↗</a>
+        </div>
+        <div class="preview relative h-[600px] overflow-hidden bg-shell">
+          <iframe src="components.html" loading="lazy" title="components — day" class="origin-top-left border-0" style="width:1200px"></iframe>
+        </div>
+      </div>
+      <!-- night -->
+      <div class="bg-navy-grad rounded-2xl shadow-btn-dark border border-black/40 overflow-hidden">
+        <div class="flex items-center gap-2 px-4 py-2.5 border-b border-white/10 bg-black/20">
+          <span class="w-3 h-3 rounded-full bg-rust shadow-[0_1px_0_rgba(255,255,255,.25)_inset]"></span>
+          <span class="w-3 h-3 rounded-full bg-yolk shadow-[0_1px_0_rgba(255,255,255,.4)_inset]"></span>
+          <span class="w-3 h-3 rounded-full bg-sage shadow-[0_1px_0_rgba(255,255,255,.3)_inset]"></span>
+          <span class="ml-2 text-xs font-bold text-cream/70">components-dark.html</span>
+          <span class="ml-auto inline-flex items-center gap-1 text-[10px] font-black uppercase tracking-wider bg-white/10 text-cream px-2.5 py-1 rounded-full border border-white/15">🌙 night</span>
+          <a href="components-dark.html" target="_blank" class="press text-xs font-extrabold text-cream bg-white/10 px-3 py-1.5 rounded-lg border border-white/15 shadow-[0_1px_0_rgba(255,255,255,.15)_inset,0_2px_0_rgba(0,0,0,.4)]">open ↗</a>
+        </div>
+        <div class="preview relative h-[600px] overflow-hidden bg-[#0A101A]">
+          <iframe src="components-dark.html" loading="lazy" title="components — night" class="origin-top-left border-0" style="width:1200px"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 02 · NAVIGATION ============ -->
+  <section id="navigation" class="space-y-5 scroll-mt-8">
+    <div class="flex flex-wrap items-end justify-between gap-3">
+      <h2 class="text-sm font-extrabold uppercase tracking-[0.2em] text-rust">02 · Navigation — wayfinding!</h2>
+      <span class="font-hand text-xl text-ink-soft rotate-[-1deg]">the workbench shelf: main bar, topics drawer, notebook tabs, mobile</span>
+    </div>
+
+    <div class="grid lg:grid-cols-2 gap-6">
+      <div class="bg-cream-grad rounded-2xl shadow-card border border-[#EADFC2] overflow-hidden">
+        <div class="flex items-center gap-2 px-4 py-2.5 border-b border-[#EFE4C8]">
+          <span class="w-3 h-3 rounded-full bg-rust shadow-[0_1px_0_rgba(255,255,255,.25)_inset]"></span>
+          <span class="w-3 h-3 rounded-full bg-yolk shadow-[0_1px_0_rgba(255,255,255,.4)_inset]"></span>
+          <span class="w-3 h-3 rounded-full bg-sage shadow-[0_1px_0_rgba(255,255,255,.3)_inset]"></span>
+          <span class="ml-2 text-xs font-bold text-ink-soft">navigation.html</span>
+          <span class="ml-auto inline-flex items-center gap-1 text-[10px] font-black uppercase tracking-wider bg-yolk-grad px-2.5 py-1 rounded-full shadow-btn border border-yolk-shadow/40">☀️ day</span>
+          <a href="navigation.html" target="_blank" class="press text-xs font-extrabold text-ink-soft bg-cream-grad px-3 py-1.5 rounded-lg shadow-btn-ghost border border-[#E2D5B4]">open ↗</a>
+        </div>
+        <div class="preview relative h-[600px] overflow-hidden bg-shell">
+          <iframe src="navigation.html" loading="lazy" title="navigation — day" class="origin-top-left border-0" style="width:1200px"></iframe>
+        </div>
+      </div>
+      <div class="bg-navy-grad rounded-2xl shadow-btn-dark border border-black/40 overflow-hidden">
+        <div class="flex items-center gap-2 px-4 py-2.5 border-b border-white/10 bg-black/20">
+          <span class="w-3 h-3 rounded-full bg-rust shadow-[0_1px_0_rgba(255,255,255,.25)_inset]"></span>
+          <span class="w-3 h-3 rounded-full bg-yolk shadow-[0_1px_0_rgba(255,255,255,.4)_inset]"></span>
+          <span class="w-3 h-3 rounded-full bg-sage shadow-[0_1px_0_rgba(255,255,255,.3)_inset]"></span>
+          <span class="ml-2 text-xs font-bold text-cream/70">navigation-dark.html</span>
+          <span class="ml-auto inline-flex items-center gap-1 text-[10px] font-black uppercase tracking-wider bg-white/10 text-cream px-2.5 py-1 rounded-full border border-white/15">🌙 night</span>
+          <a href="navigation-dark.html" target="_blank" class="press text-xs font-extrabold text-cream bg-white/10 px-3 py-1.5 rounded-lg border border-white/15 shadow-[0_1px_0_rgba(255,255,255,.15)_inset,0_2px_0_rgba(0,0,0,.4)]">open ↗</a>
+        </div>
+        <div class="preview relative h-[600px] overflow-hidden bg-[#0A101A]">
+          <iframe src="navigation-dark.html" loading="lazy" title="navigation — night" class="origin-top-left border-0" style="width:1200px"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 03 · FOOTER ============ -->
+  <section id="footer" class="space-y-5 scroll-mt-8">
+    <div class="flex flex-wrap items-end justify-between gap-3">
+      <h2 class="text-sm font-extrabold uppercase tracking-[0.2em] text-rust">03 · Footer — the bottom shelf</h2>
+      <span class="font-hand text-xl text-ink-soft rotate-[-1deg]">the send-off, the basement, and the dumbwaiter back upstairs</span>
+    </div>
+
+    <div class="grid lg:grid-cols-2 gap-6">
+      <div class="bg-cream-grad rounded-2xl shadow-card border border-[#EADFC2] overflow-hidden">
+        <div class="flex items-center gap-2 px-4 py-2.5 border-b border-[#EFE4C8]">
+          <span class="w-3 h-3 rounded-full bg-rust shadow-[0_1px_0_rgba(255,255,255,.25)_inset]"></span>
+          <span class="w-3 h-3 rounded-full bg-yolk shadow-[0_1px_0_rgba(255,255,255,.4)_inset]"></span>
+          <span class="w-3 h-3 rounded-full bg-sage shadow-[0_1px_0_rgba(255,255,255,.3)_inset]"></span>
+          <span class="ml-2 text-xs font-bold text-ink-soft">footer.html</span>
+          <span class="ml-auto inline-flex items-center gap-1 text-[10px] font-black uppercase tracking-wider bg-yolk-grad px-2.5 py-1 rounded-full shadow-btn border border-yolk-shadow/40">☀️ day</span>
+          <a href="footer.html" target="_blank" class="press text-xs font-extrabold text-ink-soft bg-cream-grad px-3 py-1.5 rounded-lg shadow-btn-ghost border border-[#E2D5B4]">open ↗</a>
+        </div>
+        <div class="preview relative h-[560px] overflow-hidden bg-shell">
+          <iframe src="footer.html" loading="lazy" title="footer — day" class="origin-top-left border-0" style="width:1200px"></iframe>
+        </div>
+      </div>
+      <div class="bg-navy-grad rounded-2xl shadow-btn-dark border border-black/40 overflow-hidden">
+        <div class="flex items-center gap-2 px-4 py-2.5 border-b border-white/10 bg-black/20">
+          <span class="w-3 h-3 rounded-full bg-rust shadow-[0_1px_0_rgba(255,255,255,.25)_inset]"></span>
+          <span class="w-3 h-3 rounded-full bg-yolk shadow-[0_1px_0_rgba(255,255,255,.4)_inset]"></span>
+          <span class="w-3 h-3 rounded-full bg-sage shadow-[0_1px_0_rgba(255,255,255,.3)_inset]"></span>
+          <span class="ml-2 text-xs font-bold text-cream/70">footer-dark.html</span>
+          <span class="ml-auto inline-flex items-center gap-1 text-[10px] font-black uppercase tracking-wider bg-white/10 text-cream px-2.5 py-1 rounded-full border border-white/15">🌙 night</span>
+          <a href="footer-dark.html" target="_blank" class="press text-xs font-extrabold text-cream bg-white/10 px-3 py-1.5 rounded-lg border border-white/15 shadow-[0_1px_0_rgba(255,255,255,.15)_inset,0_2px_0_rgba(0,0,0,.4)]">open ↗</a>
+        </div>
+        <div class="preview relative h-[560px] overflow-hidden bg-[#0A101A]">
+          <iframe src="footer-dark.html" loading="lazy" title="footer — night" class="origin-top-left border-0" style="width:1200px"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 04 · RESOURCE LIST ============ -->
+  <section id="resource-list" class="space-y-5 scroll-mt-8">
+    <div class="flex flex-wrap items-end justify-between gap-3">
+      <h2 class="text-sm font-extrabold uppercase tracking-[0.2em] text-rust">04 · Resource List — every lesson in its place</h2>
+      <span class="font-hand text-xl text-ink-soft rotate-[-1deg]">curriculum with statuses, collapsible sections &amp; a raised yolk key for "you are here"</span>
+    </div>
+
+    <div class="grid lg:grid-cols-2 gap-6">
+      <div class="bg-cream-grad rounded-2xl shadow-card border border-[#EADFC2] overflow-hidden">
+        <div class="flex items-center gap-2 px-4 py-2.5 border-b border-[#EFE4C8]">
+          <span class="w-3 h-3 rounded-full bg-rust shadow-[0_1px_0_rgba(255,255,255,.25)_inset]"></span>
+          <span class="w-3 h-3 rounded-full bg-yolk shadow-[0_1px_0_rgba(255,255,255,.4)_inset]"></span>
+          <span class="w-3 h-3 rounded-full bg-sage shadow-[0_1px_0_rgba(255,255,255,.3)_inset]"></span>
+          <span class="ml-2 text-xs font-bold text-ink-soft">resource-list.html</span>
+          <span class="ml-auto inline-flex items-center gap-1 text-[10px] font-black uppercase tracking-wider bg-yolk-grad px-2.5 py-1 rounded-full shadow-btn border border-yolk-shadow/40">☀️ day</span>
+          <a href="resource-list.html" target="_blank" class="press text-xs font-extrabold text-ink-soft bg-cream-grad px-3 py-1.5 rounded-lg shadow-btn-ghost border border-[#E2D5B4]">open ↗</a>
+        </div>
+        <div class="preview relative h-[600px] overflow-hidden bg-shell">
+          <iframe src="resource-list.html" loading="lazy" title="resource list — day" class="origin-top-left border-0" style="width:1200px"></iframe>
+        </div>
+      </div>
+      <div class="bg-navy-grad rounded-2xl shadow-btn-dark border border-black/40 overflow-hidden">
+        <div class="flex items-center gap-2 px-4 py-2.5 border-b border-white/10 bg-black/20">
+          <span class="w-3 h-3 rounded-full bg-rust shadow-[0_1px_0_rgba(255,255,255,.25)_inset]"></span>
+          <span class="w-3 h-3 rounded-full bg-yolk shadow-[0_1px_0_rgba(255,255,255,.4)_inset]"></span>
+          <span class="w-3 h-3 rounded-full bg-sage shadow-[0_1px_0_rgba(255,255,255,.3)_inset]"></span>
+          <span class="ml-2 text-xs font-bold text-cream/70">resource-list-dark.html</span>
+          <span class="ml-auto inline-flex items-center gap-1 text-[10px] font-black uppercase tracking-wider bg-white/10 text-cream px-2.5 py-1 rounded-full border border-white/15">🌙 night</span>
+          <a href="resource-list-dark.html" target="_blank" class="press text-xs font-extrabold text-cream bg-white/10 px-3 py-1.5 rounded-lg border border-white/15 shadow-[0_1px_0_rgba(255,255,255,.15)_inset,0_2px_0_rgba(0,0,0,.4)]">open ↗</a>
+        </div>
+        <div class="preview relative h-[600px] overflow-hidden bg-[#0A101A]">
+          <iframe src="resource-list-dark.html" loading="lazy" title="resource list — night" class="origin-top-left border-0" style="width:1200px"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 05 · ARTICLE ============ -->
+  <section id="article" class="space-y-5 scroll-mt-8">
+    <div class="flex flex-wrap items-end justify-between gap-3">
+      <h2 class="text-sm font-extrabold uppercase tracking-[0.2em] text-rust">05 · Article — long-form on paper stock</h2>
+      <span class="font-hand text-xl text-ink-soft rotate-[-1deg]">one reading column that breaks out for figures &amp; code — stickies, field rules &amp; a navy terminal</span>
+    </div>
+
+    <div class="grid lg:grid-cols-2 gap-6">
+      <div class="bg-cream-grad rounded-2xl shadow-card border border-[#EADFC2] overflow-hidden">
+        <div class="flex items-center gap-2 px-4 py-2.5 border-b border-[#EFE4C8]">
+          <span class="w-3 h-3 rounded-full bg-rust shadow-[0_1px_0_rgba(255,255,255,.25)_inset]"></span>
+          <span class="w-3 h-3 rounded-full bg-yolk shadow-[0_1px_0_rgba(255,255,255,.4)_inset]"></span>
+          <span class="w-3 h-3 rounded-full bg-sage shadow-[0_1px_0_rgba(255,255,255,.3)_inset]"></span>
+          <span class="ml-2 text-xs font-bold text-ink-soft">article.html</span>
+          <span class="ml-auto inline-flex items-center gap-1 text-[10px] font-black uppercase tracking-wider bg-yolk-grad px-2.5 py-1 rounded-full shadow-btn border border-yolk-shadow/40">☀️ day</span>
+          <a href="article.html" target="_blank" class="press text-xs font-extrabold text-ink-soft bg-cream-grad px-3 py-1.5 rounded-lg shadow-btn-ghost border border-[#E2D5B4]">open ↗</a>
+        </div>
+        <div class="preview relative h-[660px] overflow-hidden bg-shell">
+          <iframe src="article.html" loading="lazy" title="article — day" class="origin-top-left border-0" style="width:1200px"></iframe>
+        </div>
+      </div>
+      <div class="bg-navy-grad rounded-2xl shadow-btn-dark border border-black/40 overflow-hidden">
+        <div class="flex items-center gap-2 px-4 py-2.5 border-b border-white/10 bg-black/20">
+          <span class="w-3 h-3 rounded-full bg-rust shadow-[0_1px_0_rgba(255,255,255,.25)_inset]"></span>
+          <span class="w-3 h-3 rounded-full bg-yolk shadow-[0_1px_0_rgba(255,255,255,.4)_inset]"></span>
+          <span class="w-3 h-3 rounded-full bg-sage shadow-[0_1px_0_rgba(255,255,255,.3)_inset]"></span>
+          <span class="ml-2 text-xs font-bold text-cream/70">article-dark.html</span>
+          <span class="ml-auto inline-flex items-center gap-1 text-[10px] font-black uppercase tracking-wider bg-white/10 text-cream px-2.5 py-1 rounded-full border border-white/15">🌙 night</span>
+          <a href="article-dark.html" target="_blank" class="press text-xs font-extrabold text-cream bg-white/10 px-3 py-1.5 rounded-lg border border-white/15 shadow-[0_1px_0_rgba(255,255,255,.15)_inset,0_2px_0_rgba(0,0,0,.4)]">open ↗</a>
+        </div>
+        <div class="preview relative h-[660px] overflow-hidden bg-[#0A101A]">
+          <iframe src="article-dark.html" loading="lazy" title="article — night" class="origin-top-left border-0" style="width:1200px"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 06 · FULL LAYOUT ============ -->
+  <section id="layout" class="space-y-5 scroll-mt-8">
+    <div class="flex flex-wrap items-end justify-between gap-3">
+      <h2 class="text-sm font-extrabold uppercase tracking-[0.2em] text-rust">06 · Full Layout — everything in context</h2>
+      <span class="font-hand text-xl text-ink-soft rotate-[-1deg]">nav → hero → shelves → marginalia → send-off → basement</span>
+    </div>
+
+    <div class="grid lg:grid-cols-2 gap-6">
+      <div class="bg-cream-grad rounded-2xl shadow-card border border-[#EADFC2] overflow-hidden">
+        <div class="flex items-center gap-2 px-4 py-2.5 border-b border-[#EFE4C8]">
+          <span class="w-3 h-3 rounded-full bg-rust shadow-[0_1px_0_rgba(255,255,255,.25)_inset]"></span>
+          <span class="w-3 h-3 rounded-full bg-yolk shadow-[0_1px_0_rgba(255,255,255,.4)_inset]"></span>
+          <span class="w-3 h-3 rounded-full bg-sage shadow-[0_1px_0_rgba(255,255,255,.3)_inset]"></span>
+          <span class="ml-2 text-xs font-bold text-ink-soft">layout.html</span>
+          <span class="ml-auto inline-flex items-center gap-1 text-[10px] font-black uppercase tracking-wider bg-yolk-grad px-2.5 py-1 rounded-full shadow-btn border border-yolk-shadow/40">☀️ day</span>
+          <a href="layout.html" target="_blank" class="press text-xs font-extrabold text-ink-soft bg-cream-grad px-3 py-1.5 rounded-lg shadow-btn-ghost border border-[#E2D5B4]">open ↗</a>
+        </div>
+        <div class="preview relative h-[660px] overflow-hidden bg-shell">
+          <iframe src="layout.html" loading="lazy" title="layout — day" class="origin-top-left border-0" style="width:1200px"></iframe>
+        </div>
+      </div>
+      <div class="bg-navy-grad rounded-2xl shadow-btn-dark border border-black/40 overflow-hidden">
+        <div class="flex items-center gap-2 px-4 py-2.5 border-b border-white/10 bg-black/20">
+          <span class="w-3 h-3 rounded-full bg-rust shadow-[0_1px_0_rgba(255,255,255,.25)_inset]"></span>
+          <span class="w-3 h-3 rounded-full bg-yolk shadow-[0_1px_0_rgba(255,255,255,.4)_inset]"></span>
+          <span class="w-3 h-3 rounded-full bg-sage shadow-[0_1px_0_rgba(255,255,255,.3)_inset]"></span>
+          <span class="ml-2 text-xs font-bold text-cream/70">layout-dark.html</span>
+          <span class="ml-auto inline-flex items-center gap-1 text-[10px] font-black uppercase tracking-wider bg-white/10 text-cream px-2.5 py-1 rounded-full border border-white/15">🌙 night</span>
+          <a href="layout-dark.html" target="_blank" class="press text-xs font-extrabold text-cream bg-white/10 px-3 py-1.5 rounded-lg border border-white/15 shadow-[0_1px_0_rgba(255,255,255,.15)_inset,0_2px_0_rgba(0,0,0,.4)]">open ↗</a>
+        </div>
+        <div class="preview relative h-[660px] overflow-hidden bg-[#0A101A]">
+          <iframe src="layout-dark.html" loading="lazy" title="layout — night" class="origin-top-left border-0" style="width:1200px"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- eggo's sign-off -->
+  <footer class="flex items-center justify-center gap-6 pb-6">
+    <figure class="rotate-[-3deg]">
+      <img src="assets/thumbs/spot-eggo-painting-button.jpg" alt="Eggo painting a yellow button"
+           class="w-32 rounded-xl shadow-sticky border-[6px] border-white" />
+      <figcaption class="font-hand text-xl text-ink-soft text-center mt-1.5">fresh coat of yolk</figcaption>
+    </figure>
+    <p class="text-center font-hand text-2xl text-ink-soft max-w-[18rem]">one bench, two shifts,<br/>zero cracked eggs. 🥚</p>
+    <figure class="rotate-[2.5deg]">
+      <img src="assets/thumbs/spot-eggo-wrench-toggle.jpg" alt="Eggo tightening a giant toggle with a wrench"
+           class="w-32 rounded-xl shadow-sticky border-[6px] border-white" />
+      <figcaption class="font-hand text-xl text-ink-soft text-center mt-1.5">hand-tightened, both modes</figcaption>
+    </figure>
+  </footer>
+
+</div>
+
+<script>
+  // scale each 1200px-wide iframe to fit its preview card; content stays scrollable inside
+  function fitPreviews() {
+    document.querySelectorAll('.preview').forEach(p => {
+      const frame = p.querySelector('iframe');
+      const scale = p.clientWidth / 1200;
+      frame.style.transform = `scale(${scale})`;
+      frame.style.height = Math.ceil(p.clientHeight / scale) + 'px';
+    });
+  }
+  window.addEventListener('resize', fitPreviews);
+  window.addEventListener('load', fitPreviews);
+  fitPreviews();
+</script>
+</body>
+</html>

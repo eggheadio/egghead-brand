@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>egghead — the bottom shelf! · footer kit (night shift)</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400..1000&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          // night shift: same names, inverted roles — markup stays close to the light kit
+          paper:   '#0D141F',
+          cream:   '#F2EAD8',
+          shell:   '#101926',
+          yolk:    '#F7C948',
+          'yolk-deep': '#E8B229',
+          'yolk-shadow': '#C28E12',
+          ink:     '#EDE4D3',
+          'ink-soft': '#9AABC0',
+          rust:    '#C2664E',
+          sky:     '#A8D4E2',
+          sage:    '#9DBE8D',
+          navy:    '#1E2A38',
+        },
+        fontFamily: {
+          sans: ['Nunito', 'system-ui', 'sans-serif'],
+          hand: ['Caveat', 'cursive'],
+        },
+        boxShadow: {
+          // raised tactile button: bottom bevel + inner top highlight + black ambient
+          'btn': '0 1px 0 rgba(255,255,255,.55) inset, 0 3px 0 #B8860F, 0 8px 14px -3px rgba(0,0,0,.55)',
+          'btn-hover': '0 1px 0 rgba(255,255,255,.6) inset, 0 3px 0 #B8860F, 0 12px 20px -4px rgba(0,0,0,.6)',
+          'btn-press': '0 2px 4px rgba(0,0,0,.45) inset, 0 1px 0 rgba(255,255,255,.08)',
+          'btn-dark': '0 1px 0 rgba(255,255,255,.12) inset, 0 3px 0 #0A1119, 0 8px 14px -3px rgba(0,0,0,.6)',
+          'btn-ghost': '0 1px 0 rgba(255,255,255,.10) inset, 0 -2px 0 rgba(0,0,0,.30) inset, 0 2px 0 #0B121C, 0 4px 8px -2px rgba(0,0,0,.5)',
+          'card': '0 1px 0 rgba(255,255,255,.07) inset, 0 1px 2px rgba(0,0,0,.35), 0 12px 28px -8px rgba(0,0,0,.55), 0 2px 4px -1px rgba(0,0,0,.3)',
+          'card-deep': '0 1px 0 rgba(255,255,255,.09) inset, 0 16px 40px -10px rgba(0,0,0,.65), 0 4px 8px -2px rgba(0,0,0,.4)',
+          'well': 'inset 0 2px 6px rgba(0,0,0,.55), inset 0 1px 2px rgba(0,0,0,.6), 0 1px 0 rgba(255,255,255,.06)',
+          'sticky': '0 2px 4px rgba(0,0,0,.35), 0 10px 20px -5px rgba(0,0,0,.55)',
+          'knob': '0 1px 0 rgba(255,255,255,.14) inset, 0 -2px 3px rgba(0,0,0,.35) inset, 0 3px 6px rgba(0,0,0,.55)',
+          'tab-up': '0 1px 0 rgba(255,255,255,.08) inset, 0 -4px 8px -4px rgba(0,0,0,.4)',
+        },
+        backgroundImage: {
+          'yolk-grad': 'linear-gradient(180deg, #FFD968 0%, #F7C948 45%, #EFB838 100%)',
+          'navy-grad': 'linear-gradient(180deg, #344660 0%, #243246 55%, #1C2839 100%)',
+          'cream-grad': 'linear-gradient(180deg, #28394E 0%, #1E2C3E 100%)',
+          'shell-grad': 'linear-gradient(180deg, #22303F 0%, #141E2A 100%)',
+          'rust-grad': 'linear-gradient(180deg, #B5604E 0%, #A05040 55%, #8F4536 100%)',
+          'sky-grad': 'linear-gradient(180deg, #C2E2EE 0%, #A8D4E2 60%, #95C6D7 100%)',
+        },
+        borderRadius: { 'xl2': '1.25rem' },
+      }
+    }
+  }
+</script>
+<style type="text/tailwindcss">
+  body {
+    background-color: #0A101A;
+    background-image:
+      radial-gradient(ellipse 80% 60% at 50% -10%, rgba(70,110,160,.22), transparent),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 .65 0 0 0 0 .75 0 0 0 0 .95 0 0 0 .04 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .press:active { transform: translateY(2px); box-shadow: 0 2px 4px rgba(0,0,0,.45) inset, 0 1px 0 rgba(255,255,255,.08) !important; }
+  .press { transition: transform .08s ease, box-shadow .12s ease, filter .12s ease; touch-action: manipulation; -webkit-tap-highlight-color: transparent; -webkit-user-select: none; user-select: none; }
+  @media (hover: hover) { .press:hover { filter: brightness(1.08); } }
+  .flink { @apply block text-sm font-bold text-ink-soft hover:text-ink py-1 rounded-md; }
+</style>
+</head>
+<body class="font-sans text-ink antialiased min-h-screen">
+
+<div class="max-w-5xl mx-auto px-6 py-14 space-y-16">
+
+  <!-- ============ HEADER ============ -->
+  <header class="text-center space-y-3">
+    <div class="inline-flex items-center gap-3.5">
+      <img src="assets/thumbs/logomark-skeuo.png" alt="egghead logomark" width="54" height="54" class="drop-shadow-[0_4px_6px_rgba(0,0,0,.6)]" />
+      <h1 class="text-4xl font-black tracking-tight">egghead <span class="text-ink-soft font-bold">/ the bottom shelf! <span class="font-bold text-ink-soft/60">— footer kit</span></span></h1>
+    </div>
+    <p class="font-hand text-2xl text-rust rotate-[-1deg]">every page ends in the workshop basement — we keep the lights on down here. 🔦</p>
+  </header>
+
+  <!-- ============ 01 · THE SEND-OFF ============ -->
+  <section class="space-y-5">
+    <h2 class="text-sm font-extrabold uppercase tracking-[0.2em] text-rust">01 · The Send-off — pre-footer CTA</h2>
+
+    <div class="relative bg-navy-grad rounded-2xl shadow-btn-dark border border-black/40 p-8 md:p-12 overflow-hidden">
+      <!-- floating code confetti -->
+      <span class="absolute font-mono font-bold text-cream/10 text-4xl left-[6%] top-[16%] rotate-[-14deg] select-none">{ }</span>
+      <span class="absolute font-mono font-bold text-cream/10 text-2xl left-[30%] bottom-[14%] rotate-[8deg] select-none">;</span>
+      <span class="absolute font-mono font-bold text-cream/10 text-3xl left-[52%] top-[10%] rotate-[10deg] select-none">λ</span>
+      <span class="absolute font-mono font-bold text-cream/10 text-2xl left-[44%] bottom-[24%] rotate-[-6deg] select-none">( )</span>
+      <span class="absolute font-mono font-bold text-cream/[.08] text-5xl right-[26%] bottom-[6%] rotate-[12deg] select-none">=&gt;</span>
+      <!-- tiny JS sun -->
+      <span class="absolute right-[14%] top-[12%] w-9 h-9 rounded-full bg-yolk-grad shadow-[0_0_28px_rgba(247,201,72,.6)] grid place-items-center font-black text-[10px] text-navy rotate-[8deg] select-none">JS</span>
+
+      <div class="relative grid md:grid-cols-[1.5fr_auto] items-center gap-8">
+        <div class="space-y-4">
+          <h3 class="text-3xl md:text-4xl font-black leading-tight text-cream">Stop scrolling.<br/>Start shipping.</h3>
+          <p class="font-semibold text-cream/70 max-w-md">Concise lessons on the tools that compound — free account, no fluff, cancel your tab-hoarding habit anytime.</p>
+          <div class="flex flex-wrap items-center gap-4 pt-1">
+            <a href="#" class="press bg-yolk-grad text-navy font-extrabold text-base px-7 pt-[15px] pb-[13px] rounded-full shadow-btn hover:shadow-btn-hover border border-yolk-shadow/40">Create free account</a>
+            <a href="#" class="press text-cream font-bold text-sm bg-white/10 px-5 py-3 rounded-xl border border-white/15 shadow-[0_1px_0_rgba(255,255,255,.15)_inset,0_2px_0_rgba(0,0,0,.4)]">Browse courses →</a>
+          </div>
+          <p class="font-hand text-xl text-cream/60 rotate-[-0.5deg]">two minutes at a time, since 2013 ✏️</p>
+        </div>
+        <img src="assets/thumbs/spot-eggo-unboxing.png" alt="Eggo popping out of a cardboard box"
+             class="hidden md:block w-44 drop-shadow-[0_8px_16px_rgba(0,0,0,.6)] rotate-[2deg]" />
+      </div>
+    </div>
+
+    <span class="font-hand text-xl text-ink-soft block px-2 rotate-[-1deg]">↑ the last pitch before the basement — eggo space, code confetti, one yolk button</span>
+  </section>
+
+  <!-- ============ 02 · THE FULL FOOTER ============ -->
+  <section class="space-y-5">
+    <h2 class="text-sm font-extrabold uppercase tracking-[0.2em] text-rust">02 · The Full Footer — the bottom shelf</h2>
+
+    <div class="relative pt-8">
+      <!-- sticky note hanging off the shelf -->
+      <div class="absolute -top-1 right-8 z-10 w-44 bg-gradient-to-b from-[#FBEFA9] to-[#F3DF7E] p-4 pt-5 shadow-sticky rotate-[2.5deg] rounded-[2px]">
+        <span class="absolute -top-2.5 left-1/2 -translate-x-1/2 w-14 h-5 bg-[#E8D9A8]/80 rotate-[-2deg] shadow-sm"></span>
+        <p class="font-hand text-xl leading-tight text-[#1E2A38]">you made it to the bottom. eggo is proud of you ★</p>
+      </div>
+
+      <footer class="bg-cream-grad rounded-2xl shadow-card border border-[#2A3A4F] overflow-hidden">
+        <div class="grid lg:grid-cols-[1.3fr_2fr_1.4fr] gap-10 p-8 md:p-10">
+
+          <!-- brand corner -->
+          <div class="space-y-4">
+            <a href="#" class="press inline-flex items-center gap-2.5 rounded-xl">
+              <img src="assets/thumbs/logomark-skeuo.png" alt="eggo" width="40" height="40" class="drop-shadow-[0_3px_4px_rgba(0,0,0,.55)]" />
+              <span class="font-black text-2xl tracking-tight">egghead</span>
+            </a>
+            <p class="font-hand text-2xl text-ink-soft leading-snug rotate-[-1deg]">learn by doing,<br/>two minutes at a time.</p>
+
+            <!-- social keycaps -->
+            <div class="flex items-center gap-2 pt-1">
+              <a href="#" aria-label="GitHub" class="press w-10 h-10 grid place-items-center rounded-xl bg-cream-grad shadow-btn-ghost border border-[#36485F] text-ink-soft">
+                <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+              </a>
+              <a href="#" aria-label="X" class="press w-10 h-10 grid place-items-center rounded-xl bg-cream-grad shadow-btn-ghost border border-[#36485F] text-ink-soft">
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M12.6 0h2.45l-5.35 6.12L16 16h-4.93l-3.86-5.05L2.8 16H.35l5.72-6.54L0 0h5.06l3.49 4.62L12.6 0zm-.86 14.53h1.36L4.32 1.39H2.86l8.88 13.14z"/></svg>
+              </a>
+              <a href="#" aria-label="YouTube" class="press w-10 h-10 grid place-items-center rounded-xl bg-cream-grad shadow-btn-ghost border border-[#36485F] text-ink-soft">
+                <svg width="18" height="14" viewBox="0 0 20 14" fill="currentColor"><path d="M19.6 2.2A2.5 2.5 0 0 0 17.8.4C16.2 0 10 0 10 0S3.8 0 2.2.4A2.5 2.5 0 0 0 .4 2.2 26 26 0 0 0 0 7a26 26 0 0 0 .4 4.8 2.5 2.5 0 0 0 1.8 1.8c1.6.4 7.8.4 7.8.4s6.2 0 7.8-.4a2.5 2.5 0 0 0 1.8-1.8A26 26 0 0 0 20 7a26 26 0 0 0-.4-4.8zM8 10V4l5.2 3L8 10z"/></svg>
+              </a>
+              <a href="#" aria-label="RSS" class="press w-10 h-10 grid place-items-center rounded-xl bg-cream-grad shadow-btn-ghost border border-[#36485F] text-ink-soft">
+                <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="3" cy="13" r="1.5" fill="currentColor" stroke="none"/><path d="M2 8a6 6 0 0 1 6 6"/><path d="M2 3a11 11 0 0 1 11 11"/></svg>
+              </a>
+            </div>
+          </div>
+
+          <!-- link columns -->
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-6">
+            <nav aria-label="Learn" class="space-y-2.5">
+              <span class="text-xs font-extrabold uppercase tracking-wider text-rust block">Learn</span>
+              <a href="#" class="flink">Courses</a>
+              <a href="#" class="flink">Lessons</a>
+              <a href="#" class="flink">Learning paths</a>
+              <a href="#" class="flink inline-flex items-center gap-1.5">Pro <span class="w-1.5 h-1.5 rounded-full bg-yolk shadow-[0_0_5px_#F7C948]"></span></a>
+            </nav>
+            <nav aria-label="Topics" class="space-y-2.5">
+              <span class="text-xs font-extrabold uppercase tracking-wider text-rust block">Topics</span>
+              <a href="#" class="flink">Claude Code</a>
+              <a href="#" class="flink">MCP</a>
+              <a href="#" class="flink">Cursor</a>
+              <a href="#" class="flink">TypeScript</a>
+              <a href="#" class="flink text-ink-soft/70">all topics →</a>
+            </nav>
+            <nav aria-label="Community" class="space-y-2.5">
+              <span class="text-xs font-extrabold uppercase tracking-wider text-rust block">Community</span>
+              <a href="#" class="flink">Instructors</a>
+              <a href="#" class="flink">Teach on egghead</a>
+              <a href="#" class="flink">Discord</a>
+              <a href="#" class="flink">Support</a>
+            </nav>
+          </div>
+
+          <!-- newsletter -->
+          <div class="space-y-3">
+            <span class="text-xs font-extrabold uppercase tracking-wider text-rust block">The egghead digest</span>
+            <p class="text-sm font-semibold text-ink-soft">One email a week. What shipped, what's worth your time, zero filler.</p>
+            <div class="flex items-center gap-2 bg-shell rounded-full p-1.5 pl-5 shadow-well border border-[#2E3F54]">
+              <input type="email" placeholder="you@example.com" class="bg-transparent outline-none w-full placeholder:text-ink/35 font-semibold text-sm" />
+              <button class="press shrink-0 bg-yolk-grad text-navy font-extrabold text-sm px-5 pt-[11px] pb-[9px] rounded-full shadow-btn border border-yolk-shadow/40">Subscribe</button>
+            </div>
+            <span class="font-hand text-lg text-ink-soft block rotate-[-0.5deg]">no spam. just signal. ✓</span>
+          </div>
+        </div>
+
+        <!-- bottom bar -->
+        <div class="flex flex-wrap items-center gap-x-5 gap-y-3 px-8 md:px-10 py-4 bg-shell-grad border-t border-[#243246] shadow-[inset_0_1px_0_rgba(255,255,255,.06)]">
+          <span class="text-xs font-bold text-ink-soft">© 2013–2026 egghead.io</span>
+          <span class="font-hand text-lg text-ink-soft/80 rotate-[-1deg]">the egg does not crack 🥚</span>
+
+          <nav class="flex items-center gap-4 text-xs font-bold text-ink-soft" aria-label="Legal">
+            <a href="#" class="hover:text-ink">Terms</a>
+            <a href="#" class="hover:text-ink">Privacy</a>
+            <a href="#" class="hover:text-ink">FAQ</a>
+          </nav>
+
+          <!-- status -->
+          <span class="ml-auto inline-flex items-center gap-1.5 bg-cream-grad text-[11px] font-extrabold px-3 py-1.5 rounded-full shadow-btn-ghost border border-[#36485F] text-ink-soft">
+            <span class="w-2 h-2 rounded-full bg-sage shadow-[0_0_5px_#9DBE8D]"></span> all systems sunny-side up
+          </span>
+
+          <!-- theme toggle: moon is on duty -->
+          <span class="inline-flex bg-shell rounded-full p-1 shadow-well border border-[#2E3F54] gap-0.5">
+            <button aria-label="light mode" class="press w-7 h-7 grid place-items-center rounded-full text-xs opacity-50">☀️</button>
+            <button aria-label="dark mode" aria-pressed="true" class="w-7 h-7 grid place-items-center rounded-full bg-cream-grad shadow-btn-ghost border border-[#36485F] text-xs">🌙</button>
+          </span>
+
+          <!-- the dumbwaiter -->
+          <button class="press inline-flex items-center gap-1.5 text-xs font-extrabold text-ink bg-cream-grad px-3.5 py-2 rounded-lg shadow-btn-ghost border border-[#36485F]">↑ Back to top</button>
+        </div>
+      </footer>
+
+      <div class="flex flex-wrap justify-between gap-4 px-2 mt-3">
+        <span class="font-hand text-xl text-ink-soft rotate-[-1deg]">↑ links are quiet — the basement doesn't shout</span>
+        <span class="font-hand text-xl text-ink-soft rotate-[1deg]">status, theme, and the dumbwaiter back upstairs ↑</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 03 · SLIM FOOTER ============ -->
+  <section class="space-y-5">
+    <h2 class="text-sm font-extrabold uppercase tracking-[0.2em] text-rust">03 · Slim Footer — lesson pages</h2>
+
+    <footer class="flex flex-wrap items-center gap-x-4 gap-y-3 bg-cream-grad rounded-xl shadow-card border border-[#2A3A4F] pl-4 pr-3 py-3">
+      <a href="#" class="press flex items-center gap-2 rounded-lg">
+        <img src="assets/thumbs/logomark-skeuo.png" alt="eggo" width="26" height="26" class="drop-shadow-[0_2px_3px_rgba(0,0,0,.55)]" />
+        <span class="font-black tracking-tight">egghead</span>
+      </a>
+      <span class="text-xs font-bold text-ink-soft">© 2013–2026</span>
+      <nav class="flex items-center gap-4 text-xs font-bold text-ink-soft" aria-label="Legal">
+        <a href="#" class="hover:text-ink">Terms</a>
+        <a href="#" class="hover:text-ink">Privacy</a>
+      </nav>
+      <span class="ml-auto font-hand text-lg text-ink-soft rotate-[-1deg] hidden sm:block">watching at 11pm? eggo's still up too. 🌙</span>
+      <span class="inline-flex items-center gap-1.5 text-[11px] font-extrabold text-ink-soft">
+        <span class="w-2 h-2 rounded-full bg-sage shadow-[0_0_5px_#9DBE8D]"></span> 99.98%
+      </span>
+      <button class="press w-9 h-9 grid place-items-center rounded-lg bg-cream-grad shadow-btn-ghost border border-[#36485F] font-black text-ink-soft">↑</button>
+    </footer>
+
+    <span class="font-hand text-xl text-ink-soft block px-2 rotate-[-1deg]">↑ lesson pages get one quiet shelf — the video is the show, the footer just sweeps up</span>
+  </section>
+
+  <!-- ============ 04 · MOBILE ============ -->
+  <section class="space-y-5 pb-4">
+    <h2 class="text-sm font-extrabold uppercase tracking-[0.2em] text-rust">04 · Mobile — the folded map</h2>
+
+    <div class="flex flex-wrap items-start gap-10">
+      <div class="w-[21rem] rotate-[-0.5deg]">
+        <footer class="bg-cream-grad rounded-[1.75rem] shadow-card-deep border border-[#2A3A4F] p-4 space-y-3">
+
+          <!-- newsletter first: the one thing worth thumb-reach -->
+          <div class="bg-shell rounded-2xl shadow-well border border-[#2E3F54] p-4 space-y-2.5">
+            <span class="text-xs font-extrabold uppercase tracking-wider text-rust block">The egghead digest</span>
+            <div class="flex items-center gap-2 bg-cream-grad rounded-full p-1 pl-4 shadow-btn-ghost border border-[#36485F]">
+              <input type="email" placeholder="you@example.com" class="bg-transparent outline-none w-full placeholder:text-ink/35 font-semibold text-sm" />
+              <button class="press shrink-0 bg-yolk-grad text-navy font-extrabold text-xs px-4 pt-[9px] pb-[7px] rounded-full shadow-btn border border-yolk-shadow/40">Join</button>
+            </div>
+          </div>
+
+          <!-- accordion sections fold like a road map -->
+          <div class="rounded-2xl border border-[#2A3A4F] shadow-btn-ghost bg-cream-grad overflow-hidden divide-y divide-[#243246]">
+            <!-- open -->
+            <div>
+              <button aria-expanded="true" class="w-full flex items-center justify-between px-4 py-3 font-extrabold text-sm bg-shell shadow-well">Learn
+                <svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="rotate-180"><path d="M1 1l4 4 4-4"/></svg>
+              </button>
+              <div class="px-4 py-2 space-y-0.5">
+                <a href="#" class="flink py-2">Courses</a>
+                <a href="#" class="flink py-2">Lessons</a>
+                <a href="#" class="flink py-2">Learning paths</a>
+                <a href="#" class="flink py-2 inline-flex items-center gap-1.5">Pro <span class="w-1.5 h-1.5 rounded-full bg-yolk shadow-[0_0_5px_#F7C948]"></span></a>
+              </div>
+            </div>
+            <!-- closed -->
+            <button aria-expanded="false" class="press w-full flex items-center justify-between px-4 py-3 font-extrabold text-sm text-ink-soft">Topics
+              <svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1l4 4 4-4"/></svg>
+            </button>
+            <button aria-expanded="false" class="press w-full flex items-center justify-between px-4 py-3 font-extrabold text-sm text-ink-soft">Community
+              <svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1l4 4 4-4"/></svg>
+            </button>
+          </div>
+
+          <!-- social keycaps centered -->
+          <div class="flex justify-center gap-2 pt-1">
+            <a href="#" aria-label="GitHub" class="press w-11 h-11 grid place-items-center rounded-xl bg-cream-grad shadow-btn-ghost border border-[#36485F] text-ink-soft">
+              <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+            </a>
+            <a href="#" aria-label="X" class="press w-11 h-11 grid place-items-center rounded-xl bg-cream-grad shadow-btn-ghost border border-[#36485F] text-ink-soft">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M12.6 0h2.45l-5.35 6.12L16 16h-4.93l-3.86-5.05L2.8 16H.35l5.72-6.54L0 0h5.06l3.49 4.62L12.6 0zm-.86 14.53h1.36L4.32 1.39H2.86l8.88 13.14z"/></svg>
+            </a>
+            <a href="#" aria-label="YouTube" class="press w-11 h-11 grid place-items-center rounded-xl bg-cream-grad shadow-btn-ghost border border-[#36485F] text-ink-soft">
+              <svg width="18" height="14" viewBox="0 0 20 14" fill="currentColor"><path d="M19.6 2.2A2.5 2.5 0 0 0 17.8.4C16.2 0 10 0 10 0S3.8 0 2.2.4A2.5 2.5 0 0 0 .4 2.2 26 26 0 0 0 0 7a26 26 0 0 0 .4 4.8 2.5 2.5 0 0 0 1.8 1.8c1.6.4 7.8.4 7.8.4s6.2 0 7.8-.4a2.5 2.5 0 0 0 1.8-1.8A26 26 0 0 0 20 7a26 26 0 0 0-.4-4.8zM8 10V4l5.2 3L8 10z"/></svg>
+            </a>
+            <a href="#" aria-label="RSS" class="press w-11 h-11 grid place-items-center rounded-xl bg-cream-grad shadow-btn-ghost border border-[#36485F] text-ink-soft">
+              <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="3" cy="13" r="1.5" fill="currentColor" stroke="none"/><path d="M2 8a6 6 0 0 1 6 6"/><path d="M2 3a11 11 0 0 1 11 11"/></svg>
+            </a>
+          </div>
+
+          <button class="press w-full inline-flex items-center justify-center gap-1.5 text-sm font-extrabold text-ink bg-cream-grad px-4 py-3 rounded-xl shadow-btn-ghost border border-[#36485F]">↑ Back to top</button>
+
+          <div class="text-center space-y-0.5 pt-1 pb-1">
+            <p class="text-xs font-bold text-ink-soft">© 2013–2026 egghead.io · <a href="#" class="hover:text-ink">Terms</a> · <a href="#" class="hover:text-ink">Privacy</a></p>
+            <p class="font-hand text-lg text-ink-soft rotate-[-0.5deg]">the egg does not crack 🥚</p>
+          </div>
+        </footer>
+        <span class="font-hand text-xl text-ink-soft block mt-2.5 text-center rotate-[-1deg]">sections fold like a road map — newsletter rides shotgun</span>
+      </div>
+
+      <!-- design notes card: paper stays paper, even at night -->
+      <div class="relative w-80 bg-gradient-to-b from-[#FCF6DF] to-[#F5E9C4] rounded-lg shadow-card-deep border border-[#E8D9A8] p-6 rotate-[1deg] mt-4 text-[#1E2A38]">
+        <span class="absolute -top-3 left-6 bg-cream-grad text-ink text-[10px] font-black uppercase tracking-[0.15em] px-3 py-1.5 rounded-md shadow-btn-ghost border border-[#36485F]">Footer rules</span>
+        <ul class="space-y-2.5 text-sm font-bold mt-1.5">
+          <li class="flex items-start gap-2"><span class="shrink-0 w-5 h-5 rounded-full bg-sage/30 border border-sage grid place-items-center text-[10px] text-[#5C7A4C] mt-0.5">✓</span> one yolk button max — Subscribe owns it</li>
+          <li class="flex items-start gap-2"><span class="shrink-0 w-5 h-5 rounded-full bg-sage/30 border border-sage grid place-items-center text-[10px] text-[#5C7A4C] mt-0.5">✓</span> links stay quiet; headers carry the rust</li>
+          <li class="flex items-start gap-2"><span class="shrink-0 w-5 h-5 rounded-full bg-sage/30 border border-sage grid place-items-center text-[10px] text-[#5C7A4C] mt-0.5">✓</span> always a way back up (the dumbwaiter)</li>
+          <li class="flex items-start gap-2"><span class="shrink-0 w-5 h-5 rounded-full bg-sage/30 border border-sage grid place-items-center text-[10px] text-[#5C7A4C] mt-0.5">✓</span> end on warmth, not legal boilerplate</li>
+        </ul>
+        <span class="absolute bottom-0 right-0 w-7 h-7 bg-gradient-to-tl from-[#E2D3A4] to-[#F5E9C4] rounded-tl-xl shadow-[-2px_-2px_4px_rgba(120,90,30,.15)] [clip-path:polygon(100%_0,100%_100%,0_100%)]"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- eggo's sign-off -->
+  <footer class="flex items-center justify-center gap-6 pb-6">
+    <figure class="rotate-[-3deg]">
+      <img src="assets/thumbs/spot-eggo-painting-button.jpg" alt="Eggo painting a yellow button"
+           class="w-36 rounded-xl shadow-sticky border-[6px] border-white" />
+      <figcaption class="font-hand text-xl text-ink-soft text-center mt-1.5">basement, freshly painted</figcaption>
+    </figure>
+    <p class="text-center font-hand text-2xl text-ink-soft max-w-[18rem]">a footer is a goodbye —<br/>say it like you mean it. 🥚</p>
+  </footer>
+
+</div>
+</body>
+</html>

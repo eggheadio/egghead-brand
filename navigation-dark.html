@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>egghead — wayfinding! · primary navigation (night shift)</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400..1000&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          // night shift: same names, inverted roles — markup stays close to the light kit
+          paper:   '#0D141F',
+          cream:   '#F2EAD8',
+          shell:   '#101926',
+          yolk:    '#F7C948',
+          'yolk-deep': '#E8B229',
+          'yolk-shadow': '#C28E12',
+          ink:     '#EDE4D3',
+          'ink-soft': '#9AABC0',
+          rust:    '#C2664E',
+          sky:     '#A8D4E2',
+          sage:    '#9DBE8D',
+          navy:    '#1E2A38',
+        },
+        fontFamily: {
+          sans: ['Nunito', 'system-ui', 'sans-serif'],
+          hand: ['Caveat', 'cursive'],
+        },
+        boxShadow: {
+          // raised tactile button: bottom bevel + inner top highlight + black ambient
+          'btn': '0 1px 0 rgba(255,255,255,.55) inset, 0 3px 0 #B8860F, 0 8px 14px -3px rgba(0,0,0,.55)',
+          'btn-hover': '0 1px 0 rgba(255,255,255,.6) inset, 0 3px 0 #B8860F, 0 12px 20px -4px rgba(0,0,0,.6)',
+          'btn-press': '0 2px 4px rgba(0,0,0,.45) inset, 0 1px 0 rgba(255,255,255,.08)',
+          'btn-dark': '0 1px 0 rgba(255,255,255,.12) inset, 0 3px 0 #0A1119, 0 8px 14px -3px rgba(0,0,0,.6)',
+          'btn-ghost': '0 1px 0 rgba(255,255,255,.10) inset, 0 -2px 0 rgba(0,0,0,.30) inset, 0 2px 0 #0B121C, 0 4px 8px -2px rgba(0,0,0,.5)',
+          'card': '0 1px 0 rgba(255,255,255,.07) inset, 0 1px 2px rgba(0,0,0,.35), 0 12px 28px -8px rgba(0,0,0,.55), 0 2px 4px -1px rgba(0,0,0,.3)',
+          'card-deep': '0 1px 0 rgba(255,255,255,.09) inset, 0 16px 40px -10px rgba(0,0,0,.65), 0 4px 8px -2px rgba(0,0,0,.4)',
+          'well': 'inset 0 2px 6px rgba(0,0,0,.55), inset 0 1px 2px rgba(0,0,0,.6), 0 1px 0 rgba(255,255,255,.06)',
+          'sticky': '0 2px 4px rgba(0,0,0,.35), 0 10px 20px -5px rgba(0,0,0,.55)',
+          'knob': '0 1px 0 rgba(255,255,255,.14) inset, 0 -2px 3px rgba(0,0,0,.35) inset, 0 3px 6px rgba(0,0,0,.55)',
+          'tab-up': '0 1px 0 rgba(255,255,255,.08) inset, 0 -4px 8px -4px rgba(0,0,0,.4)',
+        },
+        backgroundImage: {
+          'yolk-grad': 'linear-gradient(180deg, #FFD968 0%, #F7C948 45%, #EFB838 100%)',
+          'navy-grad': 'linear-gradient(180deg, #344660 0%, #243246 55%, #1C2839 100%)',
+          'cream-grad': 'linear-gradient(180deg, #28394E 0%, #1E2C3E 100%)',
+          'shell-grad': 'linear-gradient(180deg, #22303F 0%, #141E2A 100%)',
+          'rust-grad': 'linear-gradient(180deg, #B5604E 0%, #A05040 55%, #8F4536 100%)',
+          'sky-grad': 'linear-gradient(180deg, #C2E2EE 0%, #A8D4E2 60%, #95C6D7 100%)',
+        },
+        borderRadius: { 'xl2': '1.25rem' },
+      }
+    }
+  }
+</script>
+<style type="text/tailwindcss">
+  body {
+    background-color: #0A101A;
+    background-image:
+      radial-gradient(ellipse 80% 60% at 50% -10%, rgba(70,110,160,.22), transparent),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 .65 0 0 0 0 .75 0 0 0 0 .95 0 0 0 .04 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .press:active { transform: translateY(2px); box-shadow: 0 2px 4px rgba(0,0,0,.45) inset, 0 1px 0 rgba(255,255,255,.08) !important; }
+  .press { transition: transform .08s ease, box-shadow .12s ease, filter .12s ease; touch-action: manipulation; -webkit-tap-highlight-color: transparent; -webkit-user-select: none; user-select: none; }
+  @media (hover: hover) { .press:hover { filter: brightness(1.08); } }
+</style>
+</head>
+<body class="font-sans text-ink antialiased min-h-screen">
+
+<div class="max-w-5xl mx-auto px-6 py-14 space-y-16">
+
+  <!-- ============ HEADER ============ -->
+  <header class="text-center space-y-3">
+    <div class="inline-flex items-center gap-3.5">
+      <img src="assets/thumbs/logomark-skeuo.png" alt="egghead logomark" width="54" height="54" class="drop-shadow-[0_4px_6px_rgba(0,0,0,.6)]" />
+      <h1 class="text-4xl font-black tracking-tight">egghead <span class="text-ink-soft font-bold">/ wayfinding! <span class="font-bold text-ink-soft/60">— primary navigation</span></span></h1>
+    </div>
+    <p class="font-hand text-2xl text-rust rotate-[-1deg]">a good nav is a workbench shelf — everything within reach, nothing rattles. 🧭</p>
+  </header>
+
+  <!-- ============ 01 · THE MAIN BAR ============ -->
+  <section class="space-y-5">
+    <h2 class="text-sm font-extrabold uppercase tracking-[0.2em] text-rust">01 · The Main Bar — signed out</h2>
+
+    <nav class="flex items-center gap-2.5 bg-cream-grad rounded-2xl shadow-card border border-[#2A3A4F] pl-4 pr-3 py-3" aria-label="Primary">
+      <!-- brand -->
+      <a href="#" class="press flex items-center gap-2.5 pr-1.5 rounded-xl">
+        <img src="assets/thumbs/logomark-skeuo.png" alt="eggo" width="34" height="34" class="drop-shadow-[0_3px_4px_rgba(0,0,0,.55)]" />
+        <span class="font-black text-xl tracking-tight">egghead</span>
+      </a>
+
+      <span class="hidden md:block w-1.5 h-1.5 rounded-full bg-yolk/70 mx-1"></span>
+
+      <!-- primary links: active page sits raised, like the key you just pressed -->
+      <div class="hidden md:flex items-center gap-1.5">
+        <a href="#" aria-current="page" class="press bg-yolk-grad text-navy font-extrabold text-sm px-4 pt-[9px] pb-[7px] rounded-full shadow-btn border border-yolk-shadow/40">Learn</a>
+        <a href="#" class="press text-ink-soft hover:text-ink font-bold text-sm px-4 py-2 rounded-full hover:bg-white/5">Courses</a>
+        <a href="#" class="press text-ink-soft hover:text-ink font-bold text-sm px-4 py-2 rounded-full hover:bg-white/5 inline-flex items-center gap-1.5">Topics
+          <svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1l4 4 4-4"/></svg>
+        </a>
+        <a href="#" class="press text-ink-soft hover:text-ink font-bold text-sm px-4 py-2 rounded-full hover:bg-white/5 inline-flex items-center gap-1.5">Pro
+          <span class="w-1.5 h-1.5 rounded-full bg-yolk shadow-[0_0_5px_#F7C948]"></span>
+        </a>
+      </div>
+
+      <!-- search well: you drop words in -->
+      <div class="ml-auto hidden lg:flex items-center gap-2.5 bg-shell rounded-full px-4 py-2 shadow-well border border-[#2E3F54] w-56">
+        <svg width="15" height="15" viewBox="0 0 17 17" fill="none" stroke="#9AABC0" stroke-width="2" stroke-linecap="round"><circle cx="7" cy="7" r="5.5"/><path d="M11.5 11.5L15.5 15.5"/></svg>
+        <span class="text-ink/35 font-semibold text-sm">Search…</span>
+        <kbd class="ml-auto text-[10px] font-extrabold bg-cream-grad rounded-md px-1.5 py-0.5 shadow-btn-ghost border border-[#36485F] text-ink-soft">⌘K</kbd>
+      </div>
+
+      <!-- auth: one yolk button per bar — the CTA earns it -->
+      <a href="#" class="press hidden sm:block text-sm font-bold text-ink px-4 py-2.5 rounded-xl bg-cream-grad shadow-btn-ghost border border-[#36485F]">Sign in</a>
+      <a href="#" class="press bg-yolk-grad text-navy font-extrabold text-sm px-5 pt-[11px] pb-[9px] rounded-xl shadow-btn hover:shadow-btn-hover border border-yolk-shadow/40">Join free</a>
+    </nav>
+
+    <!-- margin notes -->
+    <div class="flex flex-wrap justify-between gap-4 px-2">
+      <span class="font-hand text-xl text-ink-soft rotate-[-1.5deg]">↑ the page you're on sits raised, like the key you just pressed</span>
+      <span class="font-hand text-xl text-ink-soft rotate-[1deg]">search is a well — you drop words in ↑</span>
+      <span class="font-hand text-xl text-ink-soft rotate-[-1deg]">one yolk CTA per shelf. it has to earn it ↑</span>
+    </div>
+  </section>
+
+  <!-- ============ 02 · TOPICS OPEN ============ -->
+  <section class="space-y-5">
+    <h2 class="text-sm font-extrabold uppercase tracking-[0.2em] text-rust">02 · Topics Menu — open</h2>
+
+    <div class="relative pb-2">
+      <nav class="flex items-center gap-2.5 bg-cream-grad rounded-2xl shadow-card border border-[#2A3A4F] pl-4 pr-3 py-3" aria-label="Primary">
+        <a href="#" class="press flex items-center gap-2.5 pr-1.5 rounded-xl">
+          <img src="assets/thumbs/logomark-skeuo.png" alt="eggo" width="34" height="34" class="drop-shadow-[0_3px_4px_rgba(0,0,0,.55)]" />
+          <span class="font-black text-xl tracking-tight">egghead</span>
+        </a>
+        <span class="hidden md:block w-1.5 h-1.5 rounded-full bg-yolk/70 mx-1"></span>
+        <div class="hidden md:flex items-center gap-1.5">
+          <a href="#" class="press text-ink-soft hover:text-ink font-bold text-sm px-4 py-2 rounded-full hover:bg-white/5">Learn</a>
+          <a href="#" class="press text-ink-soft hover:text-ink font-bold text-sm px-4 py-2 rounded-full hover:bg-white/5">Courses</a>
+          <!-- open trigger: pressed INTO the shelf while its drawer is out -->
+          <a href="#" aria-expanded="true" class="bg-shell text-ink font-extrabold text-sm px-4 pt-[9px] pb-[7px] rounded-full shadow-well border border-[#36485F] inline-flex items-center gap-1.5">Topics
+            <svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="rotate-180"><path d="M1 1l4 4 4-4"/></svg>
+          </a>
+          <a href="#" class="press text-ink-soft hover:text-ink font-bold text-sm px-4 py-2 rounded-full hover:bg-white/5 inline-flex items-center gap-1.5">Pro
+            <span class="w-1.5 h-1.5 rounded-full bg-yolk shadow-[0_0_5px_#F7C948]"></span>
+          </a>
+        </div>
+        <div class="ml-auto hidden lg:flex items-center gap-2.5 bg-shell rounded-full px-4 py-2 shadow-well border border-[#2E3F54] w-56">
+          <svg width="15" height="15" viewBox="0 0 17 17" fill="none" stroke="#9AABC0" stroke-width="2" stroke-linecap="round"><circle cx="7" cy="7" r="5.5"/><path d="M11.5 11.5L15.5 15.5"/></svg>
+          <span class="text-ink/35 font-semibold text-sm">Search…</span>
+          <kbd class="ml-auto text-[10px] font-extrabold bg-cream-grad rounded-md px-1.5 py-0.5 shadow-btn-ghost border border-[#36485F] text-ink-soft">⌘K</kbd>
+        </div>
+        <a href="#" class="press hidden sm:block text-sm font-bold text-ink px-4 py-2.5 rounded-xl bg-cream-grad shadow-btn-ghost border border-[#36485F]">Sign in</a>
+        <a href="#" class="press bg-yolk-grad text-navy font-extrabold text-sm px-5 pt-[11px] pb-[9px] rounded-xl shadow-btn hover:shadow-btn-hover border border-yolk-shadow/40">Join free</a>
+      </nav>
+
+      <!-- the drawer: an index card that slid out from under the shelf -->
+      <div class="mt-3 ml-6 md:ml-44 w-[min(100%,34rem)] relative bg-cream-grad rounded-2xl shadow-card-deep border border-[#2A3A4F] p-5 rotate-[-0.4deg]">
+        <!-- masking tape hinge -->
+        <span class="absolute -top-2.5 left-10 w-16 h-5 bg-[#E8D9A8]/70 rotate-[-2deg] shadow-sm"></span>
+
+        <div class="grid sm:grid-cols-[1fr_auto] gap-5">
+          <div class="space-y-1">
+            <span class="text-[10px] font-black uppercase tracking-[0.18em] text-rust block px-2 pb-1.5">Pick a lane</span>
+
+            <a href="#" class="press flex items-center gap-3 px-2 py-2 rounded-xl hover:bg-white/5">
+              <span class="w-9 h-9 grid place-items-center rounded-lg bg-yolk-grad text-navy shadow-btn border border-yolk-shadow/40 font-black text-xs">CC</span>
+              <span class="min-w-0"><span class="font-extrabold text-sm block leading-tight">Claude Code</span><span class="text-xs font-semibold text-ink-soft">24 lessons · hooks, agents, skills</span></span>
+              <span class="ml-auto font-black text-ink-soft/50">→</span>
+            </a>
+            <a href="#" class="press flex items-center gap-3 px-2 py-2 rounded-xl hover:bg-white/5">
+              <span class="w-9 h-9 grid place-items-center rounded-lg bg-rust-grad shadow-btn-dark border border-[#7E3C2E] font-black text-xs text-cream">M</span>
+              <span class="min-w-0"><span class="font-extrabold text-sm block leading-tight">MCP</span><span class="text-xs font-semibold text-ink-soft">18 lessons · servers, tools, transports</span></span>
+              <span class="ml-auto font-black text-ink-soft/50">→</span>
+            </a>
+            <a href="#" class="press flex items-center gap-3 px-2 py-2 rounded-xl hover:bg-white/5">
+              <span class="w-9 h-9 grid place-items-center rounded-lg bg-sky-grad text-navy border border-[#86B8C9] font-black text-xs [box-shadow:0_1px_0_rgba(255,255,255,.5)_inset,0_3px_0_#86B8C9,0_5px_8px_-2px_rgba(0,0,0,.5)]">CU</span>
+              <span class="min-w-0"><span class="font-extrabold text-sm block leading-tight">Cursor</span><span class="text-xs font-semibold text-ink-soft">15 lessons · rules, composer, tab</span></span>
+              <span class="ml-auto font-black text-ink-soft/50">→</span>
+            </a>
+            <a href="#" class="press flex items-center gap-3 px-2 py-2 rounded-xl hover:bg-white/5">
+              <span class="w-9 h-9 grid place-items-center rounded-lg bg-gradient-to-b from-[#AECB9E] to-[#8FB07E] text-navy border border-[#7FA06E] font-black text-xs [box-shadow:0_1px_0_rgba(255,255,255,.5)_inset,0_3px_0_#7FA06E,0_5px_8px_-2px_rgba(0,0,0,.5)]">TS</span>
+              <span class="min-w-0"><span class="font-extrabold text-sm block leading-tight">TypeScript</span><span class="text-xs font-semibold text-ink-soft">32 lessons · the classics, sharpened</span></span>
+              <span class="ml-auto font-black text-ink-soft/50">→</span>
+            </a>
+
+            <a href="#" class="press flex items-center gap-2 px-2 pt-2.5 text-sm font-extrabold text-ink-soft">
+              <span class="w-9 h-7 grid place-items-center rounded-lg bg-shell shadow-well border border-[#36485F] text-xs tracking-widest">···</span>
+              Browse all topics →
+            </a>
+          </div>
+
+          <!-- featured: start here -->
+          <div class="w-44 bg-shell-grad rounded-xl shadow-well border border-[#2E3F54] p-4 text-center space-y-2.5 self-start">
+            <span class="text-[10px] font-black uppercase tracking-[0.15em] text-rust block">New here?</span>
+            <img src="assets/thumbs/spot-eggo-unboxing.png" alt="Eggo popping out of a cardboard box" class="mx-auto w-24 drop-shadow-[0_5px_8px_rgba(0,0,0,.55)]" />
+            <p class="font-extrabold text-sm leading-tight">AI Dev<br/>Essentials</p>
+            <a href="#" class="press block bg-yolk-grad text-navy font-extrabold text-xs px-3 pt-[9px] pb-[7px] rounded-full shadow-btn border border-yolk-shadow/40">Start here →</a>
+          </div>
+        </div>
+      </div>
+
+      <span class="font-hand text-xl text-ink-soft block mt-3 ml-10 rotate-[-1deg]">the trigger presses IN while its drawer is out — taped on, like everything good ↑</span>
+    </div>
+  </section>
+
+  <!-- ============ 03 · SIGNED IN, SCROLLED ============ -->
+  <section class="space-y-5">
+    <h2 class="text-sm font-extrabold uppercase tracking-[0.2em] text-rust">03 · Signed In — scrolled &amp; compact</h2>
+
+    <nav class="flex items-center gap-2.5 bg-cream-grad rounded-xl shadow-card border border-[#2A3A4F] pl-3 pr-2.5 py-2" aria-label="Primary">
+      <a href="#" class="press flex items-center gap-2 pr-1 rounded-lg">
+        <img src="assets/thumbs/logomark-skeuo.png" alt="eggo" width="28" height="28" class="drop-shadow-[0_2px_3px_rgba(0,0,0,.55)]" />
+        <span class="font-black text-lg tracking-tight hidden sm:block">egghead</span>
+      </a>
+
+      <div class="hidden md:flex items-center gap-1">
+        <a href="#" aria-current="page" class="press bg-yolk-grad text-navy font-extrabold text-[13px] px-3.5 pt-[7px] pb-[5px] rounded-full shadow-btn border border-yolk-shadow/40">Learn</a>
+        <a href="#" class="press text-ink-soft hover:text-ink font-bold text-[13px] px-3.5 py-1.5 rounded-full hover:bg-white/5">Courses</a>
+        <a href="#" class="press text-ink-soft hover:text-ink font-bold text-[13px] px-3.5 py-1.5 rounded-full hover:bg-white/5">Topics</a>
+      </div>
+
+      <!-- continue learning: your bookmark lives in the nav -->
+      <a href="#" class="press ml-auto hidden lg:flex items-center gap-3 bg-shell rounded-lg pl-2 pr-3 py-1.5 shadow-well border border-[#2E3F54] max-w-[17rem]">
+        <span class="relative shrink-0 w-12 h-8 bg-navy-grad rounded-md shadow-btn-dark border border-black/40 overflow-hidden">
+          <span class="absolute inset-1.5 space-y-0.5 block">
+            <span class="block h-0.5 w-3/4 bg-sage/70 rounded-full"></span>
+            <span class="block h-0.5 w-1/2 bg-yolk/60 rounded-full"></span>
+          </span>
+        </span>
+        <span class="min-w-0">
+          <span class="block text-[11px] font-extrabold leading-tight truncate">Use hooks to enforce code quality</span>
+          <span class="mt-1 h-1.5 bg-cream-grad rounded-full shadow-well border border-[#36485F] block overflow-hidden"><span class="block h-full w-3/5 bg-yolk-grad rounded-full"></span></span>
+        </span>
+        <span class="shrink-0 font-black text-ink-soft text-sm">→</span>
+      </a>
+
+      <!-- streak chip -->
+      <span class="hidden sm:inline-flex items-center gap-1.5 bg-cream-grad text-xs font-extrabold px-3 py-1.5 rounded-full shadow-btn-ghost border border-[#36485F]">⚡ 7</span>
+
+      <!-- search compressed to a key -->
+      <button aria-label="search" class="press w-9 h-9 grid place-items-center rounded-lg bg-cream-grad shadow-btn-ghost border border-[#36485F] text-ink-soft">
+        <svg width="15" height="15" viewBox="0 0 17 17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="7" cy="7" r="5.5"/><path d="M11.5 11.5L15.5 15.5"/></svg>
+      </button>
+
+      <!-- avatar knob -->
+      <button class="press w-9 h-9 rounded-full bg-gradient-to-b from-[#C2D8E4] to-[#9FBFD0] shadow-knob border-2 border-white grid place-items-center font-black text-xs text-[#43536A]">JL</button>
+    </nav>
+
+    <div class="flex flex-wrap justify-between gap-4 px-2">
+      <span class="font-hand text-xl text-ink-soft rotate-[-1deg]">↑ scrolled: the shelf gets shallower, nothing falls off</span>
+      <span class="font-hand text-xl text-ink-soft rotate-[1deg]">your bookmark rides along — progress bar and all ↑</span>
+      <span class="font-hand text-xl text-ink-soft rotate-[-0.5deg]">the avatar is a knob. of course it is ↑</span>
+    </div>
+  </section>
+
+  <!-- ============ 04 · NOTEBOOK TABS VARIANT ============ -->
+  <section class="space-y-5">
+    <h2 class="text-sm font-extrabold uppercase tracking-[0.2em] text-rust">04 · Notebook Tabs — the field-guide flavor</h2>
+
+    <div>
+      <div class="flex items-end gap-1.5 px-5">
+        <a href="#" class="press flex items-center gap-2 bg-cream-grad rounded-t-xl border border-b-0 border-[#36485F] shadow-tab-up px-4 pt-2.5 pb-2.5 mr-2">
+          <img src="assets/thumbs/logomark-skeuo.png" alt="eggo" width="24" height="24" class="drop-shadow-[0_2px_3px_rgba(0,0,0,.55)]" />
+          <span class="font-black tracking-tight">egghead</span>
+        </a>
+        <a href="#" aria-current="page" class="relative top-px z-10 bg-[#28394E] font-extrabold text-sm px-5 pt-3 pb-3 rounded-t-xl border border-b-0 border-[#36485F]">Learn</a>
+        <a href="#" class="press bg-shell-grad font-bold text-sm text-ink-soft px-5 pt-2.5 pb-2 rounded-t-xl border border-b-0 border-[#36485F] shadow-[inset_0_-5px_6px_-4px_rgba(0,0,0,.5),inset_0_1px_0_rgba(255,255,255,.07)]">Courses</a>
+        <a href="#" class="press bg-shell-grad font-bold text-sm text-ink-soft px-5 pt-2.5 pb-2 rounded-t-xl border border-b-0 border-[#36485F] shadow-[inset_0_-5px_6px_-4px_rgba(0,0,0,.5),inset_0_1px_0_rgba(255,255,255,.07)]">Topics</a>
+        <a href="#" class="press bg-shell-grad font-bold text-sm text-ink-soft px-5 pt-2.5 pb-2 rounded-t-xl border border-b-0 border-[#36485F] shadow-[inset_0_-5px_6px_-4px_rgba(0,0,0,.5),inset_0_1px_0_rgba(255,255,255,.07)]">Pro</a>
+        <span class="ml-auto hidden sm:flex items-center gap-2 pb-1.5">
+          <kbd class="text-[10px] font-extrabold bg-cream-grad rounded-md px-2 py-1 shadow-btn-ghost border border-[#36485F] text-ink-soft">⌘K</kbd>
+          <button class="press w-8 h-8 rounded-full bg-gradient-to-b from-[#C2D8E4] to-[#9FBFD0] shadow-knob border-2 border-white grid place-items-center font-black text-[10px] text-[#43536A]">JL</button>
+        </span>
+      </div>
+
+      <div class="bg-cream-grad rounded-2xl border border-[#36485F] shadow-card p-6 space-y-3">
+        <!-- breadcrumbs: the trail of crumbs back out of the woods -->
+        <div class="flex items-center gap-2 text-sm font-bold text-ink-soft">
+          <a href="#" class="press px-2 py-1 rounded-lg hover:bg-white/5">Learn</a>
+          <span class="text-ink/30">▸</span>
+          <a href="#" class="press px-2 py-1 rounded-lg hover:bg-white/5">Claude Code</a>
+          <span class="text-ink/30">▸</span>
+          <span class="bg-shell px-2.5 py-1 rounded-lg shadow-well border border-[#2E3F54] text-ink font-extrabold">Hooks</span>
+        </div>
+        <h3 class="text-2xl font-black leading-tight">Use hooks to enforce code quality</h3>
+        <p class="font-semibold text-ink-soft text-sm max-w-lg">The current page is the open notebook tab. Every other section is one flip away — no menus to excavate.</p>
+      </div>
+
+      <span class="font-hand text-xl text-ink-soft block mt-3 ml-6 rotate-[-1deg]">↑ the site is a field guide. tabs are the chapters, crumbs are the trail back.</span>
+    </div>
+  </section>
+
+  <!-- ============ 05 · MOBILE ============ -->
+  <section class="space-y-5 pb-4">
+    <h2 class="text-sm font-extrabold uppercase tracking-[0.2em] text-rust">05 · Mobile — closed &amp; open</h2>
+
+    <div class="flex flex-wrap items-start gap-10">
+
+      <!-- closed -->
+      <div class="w-[21rem] rotate-[-0.5deg]">
+        <div class="bg-cream-grad rounded-[1.75rem] shadow-card-deep border border-[#2A3A4F] p-3 space-y-3">
+          <nav class="flex items-center gap-2 bg-cream-grad rounded-2xl shadow-card border border-[#2A3A4F] pl-3 pr-2 py-2.5" aria-label="Primary">
+            <a href="#" class="press flex items-center gap-2 rounded-lg">
+              <img src="assets/thumbs/logomark-skeuo.png" alt="eggo" width="30" height="30" class="drop-shadow-[0_2px_3px_rgba(0,0,0,.55)]" />
+              <span class="font-black text-lg tracking-tight">egghead</span>
+            </a>
+            <button aria-label="search" class="press ml-auto w-10 h-10 grid place-items-center rounded-xl bg-cream-grad shadow-btn-ghost border border-[#36485F] text-ink-soft">
+              <svg width="16" height="16" viewBox="0 0 17 17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="7" cy="7" r="5.5"/><path d="M11.5 11.5L15.5 15.5"/></svg>
+            </button>
+            <button aria-label="menu" class="press w-10 h-10 grid place-items-center rounded-xl bg-yolk-grad shadow-btn border border-yolk-shadow/40">
+              <span class="space-y-1 block">
+                <span class="block w-[18px] h-[2.5px] bg-navy rounded-full"></span>
+                <span class="block w-[18px] h-[2.5px] bg-navy rounded-full"></span>
+                <span class="block w-[12px] h-[2.5px] bg-navy rounded-full"></span>
+              </span>
+            </button>
+          </nav>
+
+          <!-- page skeleton -->
+          <div class="bg-shell rounded-2xl shadow-well border border-[#2E3F54] p-4 space-y-2.5">
+            <span class="block h-2.5 w-3/4 bg-ink/15 rounded-full"></span>
+            <span class="block h-2.5 w-1/2 bg-ink/10 rounded-full"></span>
+            <span class="block h-24 bg-cream-grad rounded-xl border border-[#36485F] shadow-btn-ghost"></span>
+            <span class="block h-2.5 w-2/3 bg-ink/10 rounded-full"></span>
+          </div>
+        </div>
+        <span class="font-hand text-xl text-ink-soft block mt-2.5 text-center rotate-[-1deg]">the menu button is yolk — it's the door</span>
+      </div>
+
+      <!-- open -->
+      <div class="w-[21rem] rotate-[0.5deg]">
+        <div class="bg-cream-grad rounded-[1.75rem] shadow-card-deep border border-[#2A3A4F] p-3 space-y-3">
+          <nav class="flex items-center gap-2 bg-cream-grad rounded-2xl shadow-card border border-[#2A3A4F] pl-3 pr-2 py-2.5" aria-label="Primary">
+            <a href="#" class="press flex items-center gap-2 rounded-lg">
+              <img src="assets/thumbs/logomark-skeuo.png" alt="eggo" width="30" height="30" class="drop-shadow-[0_2px_3px_rgba(0,0,0,.55)]" />
+              <span class="font-black text-lg tracking-tight">egghead</span>
+            </a>
+            <!-- close: pressed in while the drawer is out -->
+            <button aria-label="close menu" aria-expanded="true" class="ml-auto w-10 h-10 grid place-items-center rounded-xl bg-shell shadow-well border border-[#36485F] text-ink font-black">✕</button>
+          </nav>
+
+          <!-- the drawer -->
+          <div class="bg-cream-grad rounded-2xl shadow-card border border-[#2A3A4F] p-3 space-y-1.5">
+            <a href="#" aria-current="page" class="press flex items-center gap-3 bg-yolk-grad text-navy rounded-xl px-4 pt-[13px] pb-[11px] shadow-btn border border-yolk-shadow/40 font-extrabold">
+              <svg width="14" height="17" viewBox="0 0 24 28"><path d="M12 1.5C7 1.5 3 9.5 3 16c0 6 3.8 10.5 9 10.5S21 22 21 16c0-6.5-4-14.5-9-14.5z" fill="#FFFDF6" stroke="#C28E12" stroke-width="2"/></svg>
+              Learn
+            </a>
+            <a href="#" class="press flex items-center justify-between px-4 py-3 rounded-xl font-bold text-ink-soft hover:bg-white/5">Courses <span class="font-black text-ink-soft/40">→</span></a>
+            <a href="#" class="press flex items-center justify-between px-4 py-3 rounded-xl font-bold text-ink-soft hover:bg-white/5">Topics <svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1l4 4 4-4"/></svg></a>
+            <a href="#" class="press flex items-center justify-between px-4 py-3 rounded-xl font-bold text-ink-soft hover:bg-white/5">Pro <span class="w-1.5 h-1.5 rounded-full bg-yolk shadow-[0_0_5px_#F7C948]"></span></a>
+
+            <div class="border-t border-[#243246] my-2"></div>
+
+            <a href="#" class="press block text-center font-bold text-ink bg-cream-grad rounded-xl px-4 py-3 shadow-btn-ghost border border-[#36485F]">Sign in</a>
+            <a href="#" class="press block text-center font-extrabold text-navy bg-yolk-grad rounded-xl px-4 pt-[13px] pb-[11px] shadow-btn border border-yolk-shadow/40">Join free</a>
+
+            <p class="font-hand text-lg text-ink-soft text-center pt-1.5 rotate-[-0.5deg]">eggo says: thumb-sized targets. always. 👍</p>
+          </div>
+        </div>
+        <span class="font-hand text-xl text-ink-soft block mt-2.5 text-center rotate-[1deg]">the active page gets the egg ↑</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- eggo's sign-off -->
+  <footer class="flex items-center justify-center gap-6 pb-6">
+    <figure class="rotate-[2.5deg]">
+      <img src="assets/thumbs/spot-eggo-wrench-toggle.jpg" alt="Eggo tightening a giant toggle with a wrench"
+           class="w-36 rounded-xl shadow-sticky border-[6px] border-white" />
+      <figcaption class="font-hand text-xl text-ink-soft text-center mt-1.5">nav bolted on by hand</figcaption>
+    </figure>
+    <p class="text-center font-hand text-2xl text-ink-soft max-w-[18rem]">you should always know where you are,<br/>and the way home is one press away. 🥚</p>
+  </footer>
+
+</div>
+</body>
+</html>
